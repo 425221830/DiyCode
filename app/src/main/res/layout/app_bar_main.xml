@@ -7,24 +7,6 @@
     android:fitsSystemWindows="false"
     tools:context="com.xiseven.diycode.ui.activity.MainActivity">
 
-    <include layout="@layout/content_main" />
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
-
-    <it.sephiroth.android.library.bottomnavigation.BottomNavigation
-        android:id="@+id/BottomNavigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:bbn_entries="@menu/bottombar_menu_items"
-        app:bbn_scrollEnabled="true" />
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -36,11 +18,21 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:title=" "
-            app:logo="@mipmap/logo_mini"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:logo="@mipmap/toolbar_icon"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title=" " />
 
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:background="#9fff"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        app:menu="@menu/menu_bottom_navigation_items" />
+
+    <include layout="@layout/content_main" />
 
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,49 +1,36 @@
 package com.xiseven.diycode.ui.activity;
 
 import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
 import com.xiseven.diycode.R;
 import com.xiseven.diycode.ui.fragment.BaseFragment;
-import com.xiseven.diycode.ui.fragment.NewsFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, BottomNavigation.OnMenuItemSelectionListener {
-    BottomNavigation bnView;
+        implements NavigationView.OnNavigationItemSelectedListener{
+    private static final String TAG = MainActivity.class.getSimpleName();
     List<BaseFragment> fragments;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -53,16 +40,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        initView();
     }
-
-    private void initView() {
-        bnView = (BottomNavigation) findViewById(R.id.BottomNavigation);
-        bnView.setOnMenuItemClickListener(this);
-        fragments = new ArrayList<>();
-        fragments.add(new NewsFragment());
-    }
-
 
     @Override
     public void onBackPressed() {
@@ -78,6 +56,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+//        toolbar.inflateMenu(R.menu.main);
         return true;
     }
 
@@ -86,14 +65,35 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            //search拿不到对象有问题
+            case R.id.action_search:
+                SearchView searchView = (SearchView) item.getActionView();
+                Log.e(TAG, "onOptionsItemSelected: " + searchView.toString());
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        Log.e(TAG, "onQueryTextSubmit: " + query);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        Log.e(TAG, "onQueryTextChange: " + newText);
+                        return false;
+                    }
+                });
+                break;
+            case R.id.action_notification:
+                break;
+            case R.id.action_settings:
+                Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
+                break;
+
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -121,17 +121,4 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onMenuItemSelect(@IdRes int i, int i1) {
-//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//        ft.add(R.id.content_main, fragments.get(i1));
-//        ft.commit();
-        Log.e("tag1", "" + i + "" + i1);
-    }
-
-    @Override
-    public void onMenuItemReselect(@IdRes int i, int i1) {
-        Log.e("tag2", "" + i + "" + i1);
-
-    }
 }

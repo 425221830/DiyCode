@@ -27,6 +27,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
     compile 'com.android.support:support-v4:25.0.1'
-    compile 'it.sephiroth.android.library.bottomnavigation:bottom-navigation:1.0.9'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.1'
+
     testCompile 'junit:junit:4.12'
 }

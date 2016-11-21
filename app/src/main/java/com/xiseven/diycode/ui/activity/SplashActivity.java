@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.xiseven.diycode.R;
 
@@ -24,8 +25,8 @@ public class SplashActivity extends AppCompatActivity {
     private void startMainActivity() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
-    }
 
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
