@@ -4,35 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
     tools:context="com.xiseven.diycode.ui.activity.MainActivity">
 
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:logo="@mipmap/toolbar_icon"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title=" " />
-
-    </android.support.design.widget.AppBarLayout>
+    <include layout="@layout/toolbar" />
+    <include layout="@layout/content_main" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNavigationView"
-        android:background="#9fff"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
+        android:background="#9fff"
         app:menu="@menu/menu_bottom_navigation_items" />
 
-    <include layout="@layout/content_main" />
 
 
 </android.support.design.widget.CoordinatorLayout>

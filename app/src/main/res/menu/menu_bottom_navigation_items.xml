@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/item1"
+        android:id="@+id/bnv_item_news"
         android:checked="true"
         android:icon="@mipmap/ic_launcher"
-        android:title="Text1"/>
+        android:title="新闻"/>
 
     <item
-        android:id="@+id/item2"
+        android:id="@+id/bnv_item_projects"
         android:icon="@mipmap/ic_launcher"
-        android:title="Text2"/>
+        android:title="项目"/>
 
     <item
-        android:id="@+id/item3"
+        android:id="@+id/bnv_item_topics"
         android:icon="@mipmap/ic_launcher"
-        android:title="Text3"/>
+        android:title="社区"/>
+    <item
+        android:id="@+id/bnv_item_sites"
+        android:icon="@mipmap/ic_launcher"
+        android:title="酷站"/>
 </menu>

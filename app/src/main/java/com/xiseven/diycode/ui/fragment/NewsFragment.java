@@ -19,32 +19,18 @@ import butterknife.ButterKnife;
 
 public class NewsFragment extends BaseFragment {
 
-    @BindView(R.id.pullLoadMoreRecyclerView)
-    PullLoadMoreRecyclerView recView;
+//    @BindView(R.id.pullLoadMoreRecyclerView)
+//    PullLoadMoreRecyclerView recView;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_news, null);
-        ButterKnife.bind(this, view);
-        return view;
+    public int getContentViewId() {
+        return R.layout.fragment_news;
     }
+
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-//        recView = (PullLoadMoreRecyclerView) view.findViewById(R.id.pullLoadMoreRecyclerView);
-//        recView.setLinearLayout();
-//        recView.setRefreshing(true);
-//        mrecViewAdapter = new RecyclerViewAdapter(mActivity, mDataList);
-//        recView.setAdapter(mrecViewAdapter);
-//        recView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
-//            @Override
-//            public void onRefresh() {
-//            }
-//
-//            @Override
-//            public void onLoadMore() {
-//            }
-//        });
+    protected void initAllMembersView(View view, Bundle savedInstanceState) {
+
     }
+
+
 }
