@@ -43,6 +43,9 @@ public abstract class BaseActivity extends ParallaxActivityBase implements View.
         mActivity = this;
         ButterKnife.bind(mActivity);
         initAllMembersView(savedInstanceState);
+
+
+
     }
 
     /**

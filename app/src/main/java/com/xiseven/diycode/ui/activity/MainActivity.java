@@ -39,8 +39,11 @@ public class MainActivity extends BaseActivity
     private static final String TAG = MainActivity.class.getSimpleName();
 
     List<BaseFragment> fragments;
+    @BindView(R.id.content_main)
+    View content_main;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
+
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
     @BindView(R.id.bottomNavigationView)
@@ -73,7 +76,6 @@ public class MainActivity extends BaseActivity
         toolbar = initToolbar("");
         toolbar.setLogo(R.mipmap.toolbar_icon);
         setBackEnable(false);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -82,8 +84,9 @@ public class MainActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
         headerView.findViewById(R.id.iv_head).setOnClickListener(this);
+//        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new onBnvItemSelect());
         initFragment();
-        bottomNavigationView.setOnNavigationItemSelectedListener(new onBnvItemSelected());
         //设置默认显示
         switchFragment(mContent, fragments.get(position));
     }
@@ -154,16 +157,17 @@ public class MainActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
 
-        drawer.closeDrawer(GravityCompat.START);
+        drawer.closeDrawers();
         return true;
     }
 
     /**
      * 底边栏点击事件
      */
-    class onBnvItemSelected implements BottomNavigationView.OnNavigationItemSelectedListener {
+    class onBnvItemSelect implements BottomNavigationView.OnNavigationItemSelectedListener {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Log.e(TAG, "onNavigationItemSelected: click");
             switch (item.getItemId()) {
                 case R.id.bnv_item_news:
                     position = 0;
@@ -184,6 +188,8 @@ public class MainActivity extends BaseActivity
             switchFragment(mContent, to);
             return true;
         }
+
+
     }
 
     /**
@@ -203,7 +209,7 @@ public class MainActivity extends BaseActivity
                     ft.hide(from);
                 }
                 //添加to
-                ft.add(R.id.content_main, to);
+                ft.add(R.id.content_main_Fragment, to);
             } else {
                 //to已经被添加
                 // from隐藏

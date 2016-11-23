@@ -12,7 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.lzy.okgo.OkGo;
 import com.xiseven.diycode.R;
+import com.xiseven.diycode.utils.ApiUtils;
 
 import butterknife.BindView;
 
@@ -61,6 +63,8 @@ public class LoginActivity extends BaseActivity {
 
     private void attemptLogin() {
         Log.d("tag", "attemptLogin: ");
+        ApiUtils.getToken("xiseven", "lq19960717001x");
+
         accountsTextInput.setErrorEnabled(false);
         passwordTextInput.setErrorEnabled(false);
         String accounts = mAccountsView.getText().toString();
