@@ -10,6 +10,7 @@ import com.lzy.okgo.model.HttpParams;
 
 import java.util.logging.Level;
 
+import static com.lzy.okgo.cache.CacheMode.NO_CACHE;
 import static com.lzy.okgo.cache.CacheMode.REQUEST_FAILED_READ_CACHE;
 
 /**
@@ -45,8 +46,8 @@ public class DiyCodeApp extends Application {
                     .setReadTimeOut(OkGo.DEFAULT_MILLISECONDS)     //全局的读取超时时间
                     .setWriteTimeOut(OkGo.DEFAULT_MILLISECONDS)    //全局的写入超时时间
                     //请求网络失败后，读取缓存
-                    .setCacheMode(REQUEST_FAILED_READ_CACHE)
-
+                    //.setCacheMode(REQUEST_FAILED_READ_CACHE)
+                    .setCacheMode(NO_CACHE)
                     //可以全局统一设置缓存时间,默认永不过期,具体使用方法看 github 介绍
                     .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE)
 

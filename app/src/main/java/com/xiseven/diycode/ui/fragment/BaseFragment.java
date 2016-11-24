@@ -1,18 +1,14 @@
 package com.xiseven.diycode.ui.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.xiseven.diycode.R;
 
 import butterknife.ButterKnife;
 
@@ -34,7 +30,7 @@ public abstract class BaseFragment extends Fragment {
      * 子类重写该方法，初始化view
      * @param savedInstanceState
      */
-    protected abstract void initAllMembersView(View view, Bundle savedInstanceState);
+    protected abstract void initAllMembers(View view, Bundle savedInstanceState);
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +49,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initAllMembersView(view, savedInstanceState);
+        initAllMembers(view, savedInstanceState);
     }
 
     @Override

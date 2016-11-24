@@ -2,13 +2,12 @@ package com.xiseven.diycode.ui.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.github.anzewei.parallaxbacklayout.ParallaxActivityBase;
-import com.github.anzewei.parallaxbacklayout.ParallaxBackActivityHelper;
-import com.github.anzewei.parallaxbacklayout.ParallaxBackLayout;
 import com.xiseven.diycode.R;
 
 import butterknife.ButterKnife;
@@ -30,7 +29,7 @@ public abstract class BaseActivity extends ParallaxActivityBase implements View.
      * 子类重写该方法，初始化view
      * @param savedInstanceState
      */
-    protected abstract void initAllMembersView(Bundle savedInstanceState);
+    protected abstract void initAllMembers(Bundle savedInstanceState);
 
     public Activity mActivity;
 
@@ -42,7 +41,7 @@ public abstract class BaseActivity extends ParallaxActivityBase implements View.
         setContentView(getContentViewId());
         mActivity = this;
         ButterKnife.bind(mActivity);
-        initAllMembersView(savedInstanceState);
+        initAllMembers(savedInstanceState);
 
 
 
@@ -76,5 +75,12 @@ public abstract class BaseActivity extends ParallaxActivityBase implements View.
     protected void onDestroy() {
         super.onDestroy();
 
+    }
+    public void showSnackbar(View view, CharSequence text) {
+        Snackbar.make(view, text, Snackbar.LENGTH_SHORT).show();
+    }
+
+    public void showToast(CharSequence text) {
+        Toast.makeText(mActivity, text, Toast.LENGTH_SHORT).show();
     }
 }

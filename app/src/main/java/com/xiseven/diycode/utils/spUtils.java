@@ -5,9 +5,10 @@ import android.content.SharedPreferences;
 
 /**
  * Created by XISEVEN on 2016/11/23.
+ * SharedPreferences工具类
  */
 
-public class SharedPreferencesUtils {
+public class SPUtils {
     /**
      * 保存在手机里面的文件名
      */

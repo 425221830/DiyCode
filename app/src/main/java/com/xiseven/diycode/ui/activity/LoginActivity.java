@@ -1,6 +1,10 @@
 package com.xiseven.diycode.ui.activity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -10,16 +14,21 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.lzy.okgo.OkGo;
+import com.xiseven.diycode.C;
 import com.xiseven.diycode.R;
-import com.xiseven.diycode.utils.ApiUtils;
+import com.xiseven.diycode.domain.User;
+import com.xiseven.diycode.presenter.BasePresenter;
+import com.xiseven.diycode.presenter.LoginPresenter;
+import com.xiseven.diycode.ui.impl.ILoginView;
 
 import butterknife.BindView;
 
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements ILoginView {
+    private static final String TAG = LoginActivity.class.getSimpleName();
     @BindView(R.id.accountsTextInput)
     TextInputLayout accountsTextInput;
     @BindView(R.id.passwordTextInput)
@@ -30,6 +39,11 @@ public class LoginActivity extends BaseActivity {
     EditText mAccountsView;
     @BindView(R.id.sign_in_button)
     Button sign_in_button;
+    @BindView(R.id.activity_login)
+    FrameLayout loginLayout;
+    private LoginPresenter mPresenter;
+    private ProgressDialog progressDialog;
+
     @Override
     public int getContentViewId() {
 
@@ -37,8 +51,10 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
-    protected void initAllMembersView(Bundle savedInstanceState) {
+    protected void initAllMembers(Bundle savedInstanceState) {
         Toolbar toolbar = initToolbar("登录");
+        mPresenter = new LoginPresenter(this);
+        progressDialog = new ProgressDialog(mActivity);
         setBackEnable(true);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -60,11 +76,8 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-
     private void attemptLogin() {
         Log.d("tag", "attemptLogin: ");
-        ApiUtils.getToken("xiseven", "lq19960717001x");
-
         accountsTextInput.setErrorEnabled(false);
         passwordTextInput.setErrorEnabled(false);
         String accounts = mAccountsView.getText().toString();
@@ -81,9 +94,30 @@ public class LoginActivity extends BaseActivity {
             passwordTextInput.setError("密码过短");
             return;
         }
+        mPresenter.login(accounts, password);
     }
+
+    //简单判断
     private boolean isPasswordValid(String password) {
         return password.length() >= 6;
     }
 
+
+    @Override
+    public void loginSuccess() {
+        Log.d(TAG, "loginSuccess: ");
+        showSnackbar(loginLayout, "登录成功");
+        finish();
+    }
+
+    @Override
+    public void loginFailed() {
+        Log.d(TAG, "loginFailed: ");
+        showSnackbar(loginLayout, "登录失败");
+    }
+
+    @Override
+    public void setPresenter(BasePresenter presenter) {
+        mPresenter = (LoginPresenter) presenter;
+    }
 }

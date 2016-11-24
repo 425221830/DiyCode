@@ -28,7 +28,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void initAllMembersView(Bundle savedInstanceState) {
+    protected void initAllMembers(Bundle savedInstanceState) {
         handler.sendEmptyMessageDelayed(START_MAINACTIVITY, 1000);
     }
 

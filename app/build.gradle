@@ -32,8 +32,10 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.4.0'
     compile 'com.android.support:support-vector-drawable:25.0.1'
     compile 'com.github.anzewei:parallaxbacklayout:0.5'
-    compile 'com.jude:fitsystemwindowlayout:2.1.5'
     compile 'com.lzy.net:okgo:+'
+    compile 'com.alibaba:fastjson:1.1.55.android'
+
+    compile 'com.squareup.picasso:picasso:2.5.2'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }

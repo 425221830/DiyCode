@@ -16,7 +16,7 @@ public class SitesFragment extends BaseFragment {
     }
 
     @Override
-    protected void initAllMembersView(View view, Bundle savedInstanceState) {
+    protected void initAllMembers(View view, Bundle savedInstanceState) {
 
     }
 }

@@ -1,6 +1,7 @@
 package com.xiseven.diycode.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -17,14 +18,22 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xiseven.diycode.impl.InitMyInfo;
 import com.xiseven.diycode.R;
+import com.xiseven.diycode.presenter.BasePresenter;
+import com.xiseven.diycode.presenter.LoginPresenter;
+import com.xiseven.diycode.presenter.MainPresenter;
 import com.xiseven.diycode.ui.fragment.BaseFragment;
 import com.xiseven.diycode.ui.fragment.NewsFragment;
 import com.xiseven.diycode.ui.fragment.ProjectFragment;
 import com.xiseven.diycode.ui.fragment.SitesFragment;
 import com.xiseven.diycode.ui.fragment.TopicFragment;
+import com.xiseven.diycode.ui.impl.IMainView;
+import com.xiseven.diycode.utils.SPUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,20 +43,22 @@ import butterknife.BindView;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        View.OnClickListener, SearchView.OnQueryTextListener {
+        View.OnClickListener, SearchView.OnQueryTextListener, IMainView {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final int REQUESTCODE_LOGIN = 0x0001;
 
     List<BaseFragment> fragments;
     @BindView(R.id.content_main)
     View content_main;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
-
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
     @BindView(R.id.bottomNavigationView)
     BottomNavigationView bottomNavigationView;
+    ImageView iv_head;
+    TextView tv_accounts;
 
     private Toolbar toolbar;
     private SearchView searchView;
@@ -55,6 +66,7 @@ public class MainActivity extends BaseActivity
     private int position = 0;
     //上次切换的Fragment
     private Fragment mContent;
+    private MainPresenter mPresenter;
 
     /**
      * 设置布局
@@ -72,7 +84,7 @@ public class MainActivity extends BaseActivity
      * @param savedInstanceState
      */
     @Override
-    protected void initAllMembersView(Bundle savedInstanceState) {
+    protected void initAllMembers(Bundle savedInstanceState) {
         toolbar = initToolbar("");
         toolbar.setLogo(R.mipmap.toolbar_icon);
         setBackEnable(false);
@@ -83,12 +95,20 @@ public class MainActivity extends BaseActivity
 
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
-        headerView.findViewById(R.id.iv_head).setOnClickListener(this);
-//        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
+        iv_head = (ImageView) headerView.findViewById(R.id.iv_head);
+        iv_head.setOnClickListener(this);
+        tv_accounts = (TextView) headerView.findViewById(R.id.tv_accounts);
         bottomNavigationView.setOnNavigationItemSelectedListener(new onBnvItemSelect());
         initFragment();
         //设置默认显示
         switchFragment(mContent, fragments.get(position));
+        mPresenter = new MainPresenter(this);
+        if (mPresenter.isLogin()) {
+            mPresenter.showHeadView();
+        } else if ("".equals((String) SPUtils.getParam(mActivity, "accounts", ""))) {
+            mPresenter.login((String) SPUtils.getParam(mActivity, "accounts", 0),
+                    (String) SPUtils.getParam(mActivity, "password", 0));
+        }
     }
 
     private void initFragment() {
@@ -101,7 +121,6 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void onBackPressed() {
-
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -160,6 +179,17 @@ public class MainActivity extends BaseActivity
         drawer.closeDrawers();
         return true;
     }
+
+    /**
+     * 获取presenter对象
+     *
+     * @param presenter
+     */
+    @Override
+    public void setPresenter(BasePresenter presenter) {
+        mPresenter = (MainPresenter) presenter;
+    }
+
 
     /**
      * 底边栏点击事件
@@ -232,8 +262,34 @@ public class MainActivity extends BaseActivity
      */
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(mActivity, LoginActivity.class));
         drawer.closeDrawers();
+        if (mPresenter.isLogin()) {
+            startActivity(new Intent(mActivity, MyInfoActivity.class));
+        } else {
+            startActivityForResult(new Intent(mActivity, LoginActivity.class), REQUESTCODE_LOGIN);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUESTCODE_LOGIN) {
+            showHeadView();
+        }
+    }
+
+    @Override
+    public void showHeadView() {
+        mPresenter.initMyInfo(new InitMyInfo() {
+            @Override
+            public void setUserName(String userName) {
+                tv_accounts.setText(userName);
+            }
+
+            @Override
+            public void setHeadImg(Bitmap bitmap) {
+                iv_head.setImageBitmap(bitmap);
+            }
+        });
     }
 
     /**
