@@ -36,6 +36,10 @@ public class MainPresenter extends BasePresenter {
         mMainModel = new MainModel();
     }
 
+    /**
+     * 设置头像和名字
+     * @param initMyInfo
+     */
     public void initMyInfo(final InitMyInfo initMyInfo) {
         String userName = (String) SPUtils.getParam(mContext, "userName", "");
         String userHeadUrl = (String) SPUtils.getParam(mContext, "userHeadUrl", "");
@@ -54,12 +58,17 @@ public class MainPresenter extends BasePresenter {
         initMyInfo.setUserName(userName);
     }
 
+    /**
+     * 登录并保存用户信息
+     * @param accounts
+     * @param password
+     */
     public void login(final String accounts, final String password) {
         new LoginModel().getToken(accounts, password, new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 MainPresenter.super.saveLoginInfo(accounts, password, s);
-                new LoginModel().getUserInfo((String) SPUtils.getParam(mContext, "access_token", 0), new StringCallback() {
+                new LoginModel().getUserInfo((String) SPUtils.getParam(mContext, "access_token", ""), new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
                         User user = JSON.parseObject(s, User.class);
@@ -72,8 +81,5 @@ public class MainPresenter extends BasePresenter {
 
     }
 
-    public void showHeadView() {
-        mMainView.showHeadView();
-    }
 
 }

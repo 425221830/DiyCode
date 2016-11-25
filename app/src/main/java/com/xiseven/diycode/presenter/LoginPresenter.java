@@ -11,7 +11,6 @@ import com.xiseven.diycode.model.LoginModel;
 import com.xiseven.diycode.model.impl.ILoginModel;
 import com.xiseven.diycode.ui.impl.IBaseView;
 import com.xiseven.diycode.ui.impl.ILoginView;
-import com.xiseven.diycode.utils.SPUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,27 +37,23 @@ public class LoginPresenter extends BasePresenter {
     }
 
     public void login(final String accounts, final String password) {
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                mLoginModel.getToken(accounts, password, new StringCallback() {
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        getUserInfo(s);
-                        LoginPresenter.super.saveLoginInfo(accounts, password, s);
-                        mLoginView.loginSuccess();
-                    }
 
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        mLoginView.loginFailed();
-                        Log.d(TAG, "onError: " + e.toString());
-                    }
-                });
+        mLoginModel.getToken(accounts, password, new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                getUserInfo(s);
+                LoginPresenter.super.saveLoginInfo(accounts, password, s);
+                mLoginView.loginSuccess();
             }
-        }.start();
+
+            @Override
+            public void onError(Call call, Response response, Exception e) {
+                mLoginView.loginFailed();
+                Log.d(TAG, "onError: " + e.toString());
+            }
+        });
     }
+
 
     private void getUserInfo(String respinseJson) {
         try {

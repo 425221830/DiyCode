@@ -26,7 +26,7 @@ public class BitmapUtils {
 
         File file = new File(context.getExternalCacheDir(), imgName + ".png");
         if (file.exists()) {
-            if (bitmap.equals(BitmapFactory.decodeFile(file.getAbsolutePath()))) {
+            if (bitmap.getByteCount()==(BitmapFactory.decodeFile(file.getAbsolutePath()).getByteCount())) {
                 return;
             }
         }
@@ -35,7 +35,6 @@ public class BitmapUtils {
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.flush();
             out.close();
-            Log.i("BitmapUtils", "成功");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,7 +52,6 @@ public class BitmapUtils {
         File file = new File(context.getExternalCacheDir(), imgName + ".png");
         if(file.exists()) {
             bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-            Log.i("BitmapUtils", "成功");
         }else {
             Log.e("BitmapUtils", "getCacheBitmap: 文件不存在");
         }

@@ -104,11 +104,14 @@ public class MainActivity extends BaseActivity
         switchFragment(mContent, fragments.get(position));
         mPresenter = new MainPresenter(this);
         if (mPresenter.isLogin()) {
-            mPresenter.showHeadView();
-        } else if ("".equals((String) SPUtils.getParam(mActivity, "accounts", ""))) {
-            mPresenter.login((String) SPUtils.getParam(mActivity, "accounts", 0),
-                    (String) SPUtils.getParam(mActivity, "password", 0));
+            //更新登录状态
+            if (!"".equals((String) SPUtils.getParam(mActivity, "accounts", ""))) {
+                mPresenter.login((String) SPUtils.getParam(mActivity, "accounts", ""),
+                        (String) SPUtils.getParam(mActivity, "password", ""));
+            }
+            showHeadView();
         }
+
     }
 
     private void initFragment() {

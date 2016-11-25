@@ -94,6 +94,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
             passwordTextInput.setError("密码过短");
             return;
         }
+        progressDialog.show();
         mPresenter.login(accounts, password);
     }
 
@@ -106,14 +107,16 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     @Override
     public void loginSuccess() {
         Log.d(TAG, "loginSuccess: ");
-        showSnackbar(loginLayout, "登录成功");
+        progressDialog.dismiss();
+        showToast("登录成功");
         finish();
     }
 
     @Override
     public void loginFailed() {
         Log.d(TAG, "loginFailed: ");
-        showSnackbar(loginLayout, "登录失败");
+        progressDialog.dismiss();
+        showToast("登录失败");
     }
 
     @Override

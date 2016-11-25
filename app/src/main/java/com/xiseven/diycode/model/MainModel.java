@@ -11,8 +11,14 @@ import com.xiseven.diycode.model.impl.IMainModel;
 public class MainModel implements IMainModel{
 
     @Override
-    public void getHeadImg(String imgUrl, AbsCallback callback) {
-        OkGo.get(imgUrl)
-                .execute(callback);
+    public void getHeadImg(final String imgUrl, final AbsCallback callback) {
+        new Thread(){
+            @Override
+            public void run() {
+                OkGo.get(imgUrl)
+                        .execute(callback);
+            }
+        }.start();
+
     }
 }
