@@ -1,10 +1,7 @@
 package com.xiseven.diycode.ui.activity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -17,12 +14,10 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.xiseven.diycode.C;
 import com.xiseven.diycode.R;
-import com.xiseven.diycode.domain.User;
-import com.xiseven.diycode.presenter.BasePresenter;
-import com.xiseven.diycode.presenter.LoginPresenter;
-import com.xiseven.diycode.ui.impl.ILoginView;
+import com.xiseven.diycode.ui.presenter.BasePresenter;
+import com.xiseven.diycode.ui.presenter.LoginPresenter;
+import com.xiseven.diycode.ui.iView.ILoginView;
 
 import butterknife.BindView;
 
@@ -55,6 +50,8 @@ public class LoginActivity extends BaseActivity implements ILoginView {
         Toolbar toolbar = initToolbar("登录");
         mPresenter = new LoginPresenter(this);
         progressDialog = new ProgressDialog(mActivity);
+        progressDialog.setMessage("登录中...");
+        //设置滑动返回
         setBackEnable(true);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

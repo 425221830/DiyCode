@@ -25,11 +25,6 @@ public class BitmapUtils {
     public static void saveImgToCache(Context context, String imgName, Bitmap bitmap) {
 
         File file = new File(context.getExternalCacheDir(), imgName + ".png");
-        if (file.exists()) {
-            if (bitmap.getByteCount()==(BitmapFactory.decodeFile(file.getAbsolutePath()).getByteCount())) {
-                return;
-            }
-        }
         try {
             FileOutputStream out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);

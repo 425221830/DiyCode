@@ -1,4 +1,4 @@
-package com.xiseven.diycode.domain;
+package com.xiseven.diycode.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,9 +7,7 @@ import android.os.Parcelable;
  * Created by XISEVEN on 2016/11/23.
  */
 
-public class User implements Parcelable {
-
-
+public class User {
 
     /**
      * id : 1
@@ -240,70 +238,4 @@ public class User implements Parcelable {
                 '}';
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
-        dest.writeString(this.login);
-        dest.writeString(this.name);
-        dest.writeString(this.avatar_url);
-        dest.writeString(this.location);
-        dest.writeString(this.company);
-        dest.writeString(this.twitter);
-        dest.writeString(this.website);
-        dest.writeString(this.bio);
-        dest.writeString(this.tagline);
-        dest.writeString(this.github);
-        dest.writeString(this.created_at);
-        dest.writeString(this.email);
-        dest.writeInt(this.topics_count);
-        dest.writeInt(this.replies_count);
-        dest.writeInt(this.following_count);
-        dest.writeInt(this.followers_count);
-        dest.writeInt(this.favorites_count);
-        dest.writeString(this.level);
-        dest.writeString(this.level_name);
-    }
-
-    public User() {
-    }
-
-    protected User(Parcel in) {
-        this.id = in.readInt();
-        this.login = in.readString();
-        this.name = in.readString();
-        this.avatar_url = in.readString();
-        this.location = in.readString();
-        this.company = in.readString();
-        this.twitter = in.readString();
-        this.website = in.readString();
-        this.bio = in.readString();
-        this.tagline = in.readString();
-        this.github = in.readString();
-        this.created_at = in.readString();
-        this.email = in.readString();
-        this.topics_count = in.readInt();
-        this.replies_count = in.readInt();
-        this.following_count = in.readInt();
-        this.followers_count = in.readInt();
-        this.favorites_count = in.readInt();
-        this.level = in.readString();
-        this.level_name = in.readString();
-    }
-
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel source) {
-            return new User(source);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
 }

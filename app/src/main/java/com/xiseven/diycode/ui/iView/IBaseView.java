@@ -1,7 +1,6 @@
-package com.xiseven.diycode.ui.impl;
+package com.xiseven.diycode.ui.iView;
 
-import com.xiseven.diycode.domain.User;
-import com.xiseven.diycode.presenter.BasePresenter;
+import com.xiseven.diycode.ui.presenter.BasePresenter;
 
 /**
  * Created by XISEVEN on 2016/11/24.

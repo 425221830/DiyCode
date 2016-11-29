@@ -1,7 +1,6 @@
 package com.xiseven.diycode.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -22,23 +21,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xiseven.diycode.impl.InitMyInfo;
+import com.squareup.picasso.Picasso;
 import com.xiseven.diycode.R;
-import com.xiseven.diycode.presenter.BasePresenter;
-import com.xiseven.diycode.presenter.LoginPresenter;
-import com.xiseven.diycode.presenter.MainPresenter;
+import com.xiseven.diycode.bean.User;
 import com.xiseven.diycode.ui.fragment.BaseFragment;
 import com.xiseven.diycode.ui.fragment.NewsFragment;
 import com.xiseven.diycode.ui.fragment.ProjectFragment;
 import com.xiseven.diycode.ui.fragment.SitesFragment;
 import com.xiseven.diycode.ui.fragment.TopicFragment;
-import com.xiseven.diycode.ui.impl.IMainView;
-import com.xiseven.diycode.utils.SPUtils;
+import com.xiseven.diycode.ui.iView.IMainView;
+import com.xiseven.diycode.ui.presenter.BasePresenter;
+import com.xiseven.diycode.ui.presenter.MainPresenter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MainActivity extends BaseActivity
@@ -46,7 +49,6 @@ public class MainActivity extends BaseActivity
         View.OnClickListener, SearchView.OnQueryTextListener, IMainView {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final int REQUESTCODE_LOGIN = 0x0001;
 
     List<BaseFragment> fragments;
     @BindView(R.id.content_main)
@@ -57,7 +59,7 @@ public class MainActivity extends BaseActivity
     DrawerLayout drawer;
     @BindView(R.id.bottomNavigationView)
     BottomNavigationView bottomNavigationView;
-    ImageView iv_head;
+    CircleImageView iv_head;
     TextView tv_accounts;
 
     private Toolbar toolbar;
@@ -95,7 +97,7 @@ public class MainActivity extends BaseActivity
 
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
-        iv_head = (ImageView) headerView.findViewById(R.id.iv_head);
+        iv_head = (de.hdodenhof.circleimageview.CircleImageView) headerView.findViewById(R.id.iv_head);
         iv_head.setOnClickListener(this);
         tv_accounts = (TextView) headerView.findViewById(R.id.tv_accounts);
         bottomNavigationView.setOnNavigationItemSelectedListener(new onBnvItemSelect());
@@ -103,14 +105,6 @@ public class MainActivity extends BaseActivity
         //设置默认显示
         switchFragment(mContent, fragments.get(position));
         mPresenter = new MainPresenter(this);
-        if (mPresenter.isLogin()) {
-            //更新登录状态
-            if (!"".equals((String) SPUtils.getParam(mActivity, "accounts", ""))) {
-                mPresenter.login((String) SPUtils.getParam(mActivity, "accounts", ""),
-                        (String) SPUtils.getParam(mActivity, "password", ""));
-            }
-            showHeadView();
-        }
 
     }
 
@@ -269,31 +263,11 @@ public class MainActivity extends BaseActivity
         if (mPresenter.isLogin()) {
             startActivity(new Intent(mActivity, MyInfoActivity.class));
         } else {
-            startActivityForResult(new Intent(mActivity, LoginActivity.class), REQUESTCODE_LOGIN);
+            startActivity(new Intent(mActivity, LoginActivity.class));
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUESTCODE_LOGIN) {
-            showHeadView();
-        }
-    }
 
-    @Override
-    public void showHeadView() {
-        mPresenter.initMyInfo(new InitMyInfo() {
-            @Override
-            public void setUserName(String userName) {
-                tv_accounts.setText(userName);
-            }
-
-            @Override
-            public void setHeadImg(Bitmap bitmap) {
-                iv_head.setImageBitmap(bitmap);
-            }
-        });
-    }
 
     /**
      * SearchView提交回调
@@ -318,5 +292,8 @@ public class MainActivity extends BaseActivity
         Log.e(TAG, "onQueryTextChange: " + newText);
         return false;
     }
+
+
+
 }
 
