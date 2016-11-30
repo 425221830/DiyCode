@@ -26,7 +26,12 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
-
+<style name="TextStyle_username">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textSize">@dimen/text_size_username</item>
+    <item name="android:textColor">#fff</item>
+</style>
 
 
 

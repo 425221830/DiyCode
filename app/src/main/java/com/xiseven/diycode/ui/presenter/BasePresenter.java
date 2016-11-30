@@ -27,5 +27,12 @@ public class BasePresenter {
     public boolean isLogin() {
         return (boolean) SPUtils.getParam(mContext, "isLogin", false);
     }
+    /**
+     * 设置登录状态
+     * @return
+     */
+    public void setLogin(Boolean b) {
+        SPUtils.setParam(mContext, "isLogin", b);
+    }
 
 }

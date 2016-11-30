@@ -38,6 +38,8 @@ public class LoginPresenter extends BasePresenter {
                 //获取我的信息
                 mLoginModel.getMyInfo(token);
                 Log.d(TAG, "success: " + token);
+                //设置登录状态
+                setLogin(true);
                 mLoginView.loginSuccess();
             }
 

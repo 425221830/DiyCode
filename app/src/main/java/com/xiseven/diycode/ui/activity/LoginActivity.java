@@ -106,6 +106,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
         Log.d(TAG, "loginSuccess: ");
         progressDialog.dismiss();
         showToast("登录成功");
+        setResult(RESULT_OK);
         finish();
     }
 

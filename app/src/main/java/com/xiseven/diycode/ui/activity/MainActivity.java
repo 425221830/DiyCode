@@ -1,6 +1,7 @@
 package com.xiseven.diycode.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -17,13 +18,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
 import com.xiseven.diycode.R;
-import com.xiseven.diycode.bean.User;
 import com.xiseven.diycode.ui.fragment.BaseFragment;
 import com.xiseven.diycode.ui.fragment.NewsFragment;
 import com.xiseven.diycode.ui.fragment.ProjectFragment;
@@ -34,8 +32,6 @@ import com.xiseven.diycode.ui.presenter.BasePresenter;
 import com.xiseven.diycode.ui.presenter.MainPresenter;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +45,7 @@ public class MainActivity extends BaseActivity
         View.OnClickListener, SearchView.OnQueryTextListener, IMainView {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final int LOGIN_REQUESTCODE = 0x1000;
 
     List<BaseFragment> fragments;
     @BindView(R.id.content_main)
@@ -99,13 +96,15 @@ public class MainActivity extends BaseActivity
         View headerView = navigationView.getHeaderView(0);
         iv_head = (de.hdodenhof.circleimageview.CircleImageView) headerView.findViewById(R.id.iv_head);
         iv_head.setOnClickListener(this);
-        tv_accounts = (TextView) headerView.findViewById(R.id.tv_accounts);
+        tv_accounts = (TextView) headerView.findViewById(R.id.tv_username);
         bottomNavigationView.setOnNavigationItemSelectedListener(new onBnvItemSelect());
         initFragment();
         //设置默认显示
         switchFragment(mContent, fragments.get(position));
         mPresenter = new MainPresenter(this);
+        if (mPresenter.isLogin()) {
 
+        }
     }
 
     private void initFragment() {
@@ -178,20 +177,11 @@ public class MainActivity extends BaseActivity
     }
 
     /**
-     * 获取presenter对象
-     *
-     * @param presenter
-     */
-    @Override
-    public void setPresenter(BasePresenter presenter) {
-        mPresenter = (MainPresenter) presenter;
-    }
-
-
-    /**
      * 底边栏点击事件
      */
     class onBnvItemSelect implements BottomNavigationView.OnNavigationItemSelectedListener {
+
+
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Log.e(TAG, "onNavigationItemSelected: click");
@@ -215,9 +205,8 @@ public class MainActivity extends BaseActivity
             switchFragment(mContent, to);
             return true;
         }
-
-
     }
+
 
     /**
      * @param from 刚显示的Fragment,马上就要被隐藏了
@@ -251,7 +240,6 @@ public class MainActivity extends BaseActivity
 
     }
 
-
     /**
      * 头像的点击事件
      *
@@ -263,11 +251,17 @@ public class MainActivity extends BaseActivity
         if (mPresenter.isLogin()) {
             startActivity(new Intent(mActivity, MyInfoActivity.class));
         } else {
-            startActivity(new Intent(mActivity, LoginActivity.class));
+            startActivityForResult(new Intent(mActivity, LoginActivity.class), LOGIN_REQUESTCODE);
         }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LOGIN_REQUESTCODE && resultCode == RESULT_OK) {
+            mPresenter.showHeader();
+        }
+    }
 
     /**
      * SearchView提交回调
@@ -281,6 +275,7 @@ public class MainActivity extends BaseActivity
         return false;
     }
 
+
     /**
      * SearchView输入改变回调
      *
@@ -293,6 +288,27 @@ public class MainActivity extends BaseActivity
         return false;
     }
 
+    /**
+     * 获取presenter对象
+     *
+     * @param presenter
+     */
+    @Override
+    public void setPresenter(BasePresenter presenter) {
+        mPresenter = (MainPresenter) presenter;
+    }
+
+    /**
+     * 登录成功后会执行该方法显示用户头像和名称
+     *
+     * @param headImg
+     * @param userName
+     */
+    @Override
+    public void showHeader(Bitmap headImg, String userName) {
+        iv_head.setImageBitmap(headImg);
+        tv_accounts.setText(userName);
+    }
 
 
 }
