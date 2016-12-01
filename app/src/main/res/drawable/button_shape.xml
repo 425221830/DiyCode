@@ -5,5 +5,5 @@
     <solid android:color="@color/button_bg_color" />
     <!-- 设置按钮的四个角为弧形 -->
     <!-- android:radius 弧形的半径 -->
-    <corners android:radius="12dip" />
+    <corners android:radius="8dip" />
 </shape>

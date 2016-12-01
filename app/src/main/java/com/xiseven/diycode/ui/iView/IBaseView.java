@@ -11,6 +11,6 @@ public interface IBaseView {
      *  获取presenter对象
      * @param presenter
      */
-    void setPresenter(BasePresenter presenter);
+//    void setPresenter(BasePresenter presenter);
 
 }

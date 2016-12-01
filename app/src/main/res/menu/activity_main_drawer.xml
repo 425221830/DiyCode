@@ -4,26 +4,30 @@
     <group>
         <item
             android:id="@+id/nav_camera"
+            android:icon="@mipmap/mytopic"
             android:title="Import" />
         <item
             android:id="@+id/nav_gallery"
+            android:icon="@mipmap/myfavorite"
             android:title="Gallery" />
         <item
             android:id="@+id/nav_slideshow"
+            android:icon="@mipmap/myreplies"
             android:title="Slideshow" />
         <item
             android:id="@+id/nav_manage"
             android:title="Tools" />
     </group>
-    <!--android:icon="@drawable/ic_menu_manage"-->
 
     <group>
         <item
-            android:id="@+id/nav_settings"
-            android:title="软件设置" />
-        <item
             android:id="@+id/nav_about"
+            android:icon="@mipmap/about"
             android:title="关于我们" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@mipmap/setting"
+            android:title="软件设置" />
     </group>
 
 </menu>

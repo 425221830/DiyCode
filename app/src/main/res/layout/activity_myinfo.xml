@@ -3,37 +3,102 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_light"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:paddingStart="@dimen/activity_horizontal_margin">
+        android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_head"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@mipmap/icon"
-            app:civ_border_color="#fff"
-            app:civ_border_width="1dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="24dp"
+            android:paddingTop="24dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_head"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@mipmap/icon"
+                app:civ_border_color="#fff"
+                app:civ_border_width="1dp" />
+
+            <TextView
+                android:id="@+id/tv_username"
+                style="@style/TextStyle_username"
+                android:layout_marginTop="12dp"
+                android:text="username" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_username"
-            style="@style/TextStyle_username"
-            android:layout_marginTop="12dp"
-            android:text="username" />
+            style="@style/TextStyle_title"
+            android:text="个性签名" />
+
+        <TextView
+            android:id="@+id/tv_bio"
+            style="@style/TextStyle_content"
+            android:text="diycode发起人，致力于打造一个开发者工程师高质量的分享交流社区" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@android:color/black" />
+
+        <TextView
+            style="@style/TextStyle_title"
+            android:text="email" />
+
+        <TextView
+            android:id="@+id/tv_email"
+            style="@style/TextStyle_content"
+            android:text="test@test.com" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@android:color/black" />
+        <TextView
+            style="@style/TextStyle_title"
+            android:text="github" />
+
+        <TextView
+            android:id="@+id/tv_github"
+            style="@style/TextStyle_content"
+            android:text="test@test.com" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@android:color/black" />
+
+        <TextView
+            style="@style/TextStyle_title"
+            android:text="等级" />
+
+        <TextView
+            android:id="@+id/tv_level"
+            style="@style/TextStyle_content"
+            android:text="admin" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@android:color/black" />
 
         <Button
             android:id="@+id/sign_out_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_shape"
-            android:text="注销" />
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:text="注销"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </ScrollView>

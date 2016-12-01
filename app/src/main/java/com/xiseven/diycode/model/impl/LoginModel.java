@@ -31,16 +31,19 @@ public class LoginModel implements ILoginModel {
 
     private static final String TAG = LoginModel.class.getSimpleName();
     private User user;
+    private String token;
+    private String platform = "android";
 
     /**
      * 获取token
+     *
      * @param username
      * @param password
      * @param callback
      */
     @Override
     public void getToken(final String username, final String password, final MyCallBack callback) {
-        Call<JsonObject> tokenCall =
+        final Call<JsonObject> tokenCall =
                 BuildApi.getAPIService().getToken(C.client_id, C.client_secret, "password", password, username);
         tokenCall.enqueue(new Callback<JsonObject>() {
             @Override
@@ -48,8 +51,9 @@ public class LoginModel implements ILoginModel {
                 if (response.isSuccessful()) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().toString());
-                        String token = (String) jsonObject.opt("access_token");
-                        callback.success(token);
+                        token = (String) jsonObject.opt("access_token");
+                        SPUtils.setParam(DiyCodeApp.getContext(), "token", token);
+                        callback.success();
                         Log.e(TAG, "onResponse: onRespsonse--true");
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -59,6 +63,7 @@ public class LoginModel implements ILoginModel {
                     callback.failed();
                 }
             }
+
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "onFailure: ");
@@ -70,43 +75,43 @@ public class LoginModel implements ILoginModel {
 
     /**
      * 注册设备
-     * @param platform
-     * @param token
+     *
      */
     @Override
-    public void postDevices(String platform, String token) {
+    public void postDevices(final MyCallBack myCallBack) {
         Call<JsonObject> call = BuildApi.getAPIService().postDevices(platform, token);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.e(TAG, "onResponse: ");
+                myCallBack.success();
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "onFailure: ");
+                myCallBack.failed();
             }
         });
     }
 
     /**
      * 获取我的信息
-     * @param token
+     *
      */
     @Override
-    public void getMyInfo(final String token) {
+    public void getMyInfo(final MyCallBack myCallBack) {
         Call<User> myInfo = BuildApi.getAPIService().getMyInfo(C.getRequestHeaderValue(token));
         myInfo.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 user = response.body();
-                getHeadImg();
-                Log.e(TAG, "onResponse: "+ user.toString());
+                myCallBack.success();
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-
+                myCallBack.failed();
             }
         });
     }
@@ -114,7 +119,7 @@ public class LoginModel implements ILoginModel {
     /**
      * 获取我的头像图片
      */
-    private void getHeadImg() {
+    public void getHeadImg(final MyCallBack myCallBack) {
         Call<ResponseBody> headImg = BuildApi.getAPIService().getHeadImg(user.getAvatar_url());
         headImg.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -123,11 +128,13 @@ public class LoginModel implements ILoginModel {
                 //保存头像到存储器
                 BitmapUtils.saveImgToCache(DiyCodeApp.getContext(), "headImg", bitmap);
                 saveMyInfo();
-                Log.e(TAG, "onResponse: "+bitmap.toString());
+                myCallBack.success();
+                Log.e(TAG, "onResponse: " + bitmap.toString());
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                myCallBack.failed();
             }
         });
     }
@@ -137,9 +144,10 @@ public class LoginModel implements ILoginModel {
      */
     private void saveMyInfo() {
         //将本地缓存的头像路径更新到user
-        user.setAvatar_url(DiyCodeApp.getContext().getExternalCacheDir()+"/headImg.png");
+        user.setAvatar_url(DiyCodeApp.getContext().getExternalCacheDir() + "/headImg.png");
         String s = new Gson().toJson(user);
         //json字符串存储我的信息到sp
         SPUtils.setParam(DiyCodeApp.getContext(), "myInfo", s);
+
     }
 }

@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.github.anzewei.parallaxbacklayout.ParallaxActivityBase;
 import com.xiseven.diycode.R;
+import com.xiseven.diycode.utils.NetUtils;
 
 import butterknife.ButterKnife;
 
@@ -42,7 +43,6 @@ public abstract class BaseActivity extends ParallaxActivityBase implements View.
         mActivity = this;
         ButterKnife.bind(mActivity);
         initAllMembers(savedInstanceState);
-
     }
 
     /**

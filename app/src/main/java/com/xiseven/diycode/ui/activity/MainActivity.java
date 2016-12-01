@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xiseven.diycode.R;
+import com.xiseven.diycode.bean.MessageEvent;
 import com.xiseven.diycode.ui.fragment.BaseFragment;
 import com.xiseven.diycode.ui.fragment.NewsFragment;
 import com.xiseven.diycode.ui.fragment.ProjectFragment;
@@ -32,6 +33,8 @@ import com.xiseven.diycode.ui.presenter.BasePresenter;
 import com.xiseven.diycode.ui.presenter.MainPresenter;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,8 +106,9 @@ public class MainActivity extends BaseActivity
         switchFragment(mContent, fragments.get(position));
         mPresenter = new MainPresenter(this);
         if (mPresenter.isLogin()) {
-
+            mPresenter.updateLogin();
         }
+        EventBus.getDefault().register(this);
     }
 
     private void initFragment() {
@@ -251,17 +255,10 @@ public class MainActivity extends BaseActivity
         if (mPresenter.isLogin()) {
             startActivity(new Intent(mActivity, MyInfoActivity.class));
         } else {
-            startActivityForResult(new Intent(mActivity, LoginActivity.class), LOGIN_REQUESTCODE);
+            startActivity(new Intent(mActivity, LoginActivity.class));
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == LOGIN_REQUESTCODE && resultCode == RESULT_OK) {
-            mPresenter.showHeader();
-        }
-    }
 
     /**
      * SearchView提交回调
@@ -288,15 +285,6 @@ public class MainActivity extends BaseActivity
         return false;
     }
 
-    /**
-     * 获取presenter对象
-     *
-     * @param presenter
-     */
-    @Override
-    public void setPresenter(BasePresenter presenter) {
-        mPresenter = (MainPresenter) presenter;
-    }
 
     /**
      * 登录成功后会执行该方法显示用户头像和名称
@@ -310,6 +298,23 @@ public class MainActivity extends BaseActivity
         tv_accounts.setText(userName);
     }
 
-
+    /**
+     * eventbus消息处理登录和注销后的显示操作
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void messageEventBus(MessageEvent event) {
+        if (event.getWhat() == 1) {
+            mPresenter.showHeader();
+        } else {
+            iv_head.setImageResource(R.mipmap.icon);
+            tv_accounts.setText("");
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }
 

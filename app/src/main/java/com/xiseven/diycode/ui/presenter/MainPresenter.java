@@ -3,7 +3,9 @@ package com.xiseven.diycode.ui.presenter;
 import android.content.Context;
 
 import com.xiseven.diycode.bean.User;
+import com.xiseven.diycode.http.MyCallBack;
 import com.xiseven.diycode.model.IMainModel;
+import com.xiseven.diycode.model.impl.LoginModel;
 import com.xiseven.diycode.model.impl.MainModel;
 import com.xiseven.diycode.ui.iView.IBaseView;
 import com.xiseven.diycode.ui.iView.IMainView;
@@ -27,6 +29,26 @@ public class MainPresenter extends BasePresenter {
         mContext = (Context) iView;
         mMainView = (IMainView) iView;
         mMainModel = new MainModel();
+    }
+
+
+    public void updateLogin() {
+        new LoginModel().getToken((String) SPUtils.getParam(mContext, "account", ""),
+                (String) SPUtils.getParam(mContext, "password", ""), new MyCallBack() {
+                    @Override
+                    public void success() {
+                        new LoginModel().postDevices(new MyCallBack() {
+                            @Override
+                            public void success() {
+                                showHeader();
+                            }
+                            @Override
+                            public void failed() {}});
+                    }
+                    @Override
+                    public void failed() {
+                        showHeader();
+                    }});
     }
 
     public void showHeader() {

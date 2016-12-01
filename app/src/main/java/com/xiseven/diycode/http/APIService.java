@@ -5,11 +5,13 @@ import com.xiseven.diycode.bean.User;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 /**
@@ -28,6 +30,9 @@ public interface APIService {
     @POST("devices.json")
     Call<JsonObject> postDevices(@Field("platform") String platform,
                      @Field("token") String token);
+    @DELETE("devices.json")
+    Call<ResponseBody> deleteDevices(@Query("platform") String platform,
+                                 @Query("token") String token);
 
     @GET("users/me.json")
     Call<User> getMyInfo(@Header("Authorization") String Authorization);

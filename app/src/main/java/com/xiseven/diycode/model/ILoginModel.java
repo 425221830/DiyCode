@@ -8,6 +8,7 @@ import com.xiseven.diycode.http.MyCallBack;
 
 public interface ILoginModel{
     void getToken(String username, String password, MyCallBack callback);
-    void getMyInfo(String token);
-    void postDevices(String platform, String token);
+    void getMyInfo(MyCallBack callBack);
+    void postDevices(MyCallBack callBack);
+    void getHeadImg(MyCallBack callBack);
 }
