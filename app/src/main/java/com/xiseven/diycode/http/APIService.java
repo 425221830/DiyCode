@@ -1,7 +1,10 @@
 package com.xiseven.diycode.http;
 
 import com.google.gson.JsonObject;
+import com.xiseven.diycode.bean.Sites;
 import com.xiseven.diycode.bean.User;
+
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -26,17 +29,23 @@ public interface APIService {
                               @Field("grant_type") String grant_type,
                               @Field("password") String password,
                               @Field("username") String username);
+
     @FormUrlEncoded
     @POST("devices.json")
     Call<JsonObject> postDevices(@Field("platform") String platform,
-                     @Field("token") String token);
+                                 @Field("token") String token);
+
     @DELETE("devices.json")
     Call<ResponseBody> deleteDevices(@Query("platform") String platform,
-                                 @Query("token") String token);
+                                     @Query("token") String token);
 
     @GET("users/me.json")
     Call<User> getMyInfo(@Header("Authorization") String Authorization);
 
     @GET()
     Call<ResponseBody> getHeadImg(@Url String url);
+
+    @GET("sites.json")
+    Call<List<Sites>> getSites();
 }
+

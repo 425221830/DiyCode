@@ -3,31 +3,33 @@
 
     <group>
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_mytopic"
             android:icon="@mipmap/mytopic"
-            android:title="Import" />
+            android:title="我的帖子" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_myfavorite"
             android:icon="@mipmap/myfavorite"
-            android:title="Gallery" />
+            android:title="我的收藏" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_myreplies"
             android:icon="@mipmap/myreplies"
-            android:title="Slideshow" />
+            android:title="我的评论" />
         <item
-            android:id="@+id/nav_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_myfollow"
+            android:icon="@mipmap/myfollow"
+            android:title="我的关注" />
     </group>
 
-    <group>
-        <item
-            android:id="@+id/nav_about"
-            android:icon="@mipmap/about"
-            android:title="关于我们" />
+    <!--group加id才会出现分割线-->
+    <group android:id="@+id/software">
         <item
             android:id="@+id/nav_settings"
             android:icon="@mipmap/setting"
             android:title="软件设置" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@mipmap/about"
+            android:title="关于我们" />
     </group>
 
 </menu>

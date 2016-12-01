@@ -35,4 +35,5 @@ public class BasePresenter {
         SPUtils.setParam(mContext, "isLogin", b);
     }
 
+
 }

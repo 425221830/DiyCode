@@ -166,6 +166,30 @@ public class MainActivity extends BaseActivity
     }
 
     /**
+     * SearchView提交回调
+     *
+     * @param query
+     * @return
+     */
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        Log.e(TAG, "onQueryTextSubmit: " + query);
+        return false;
+    }
+
+    /**
+     * SearchView输入改变回调
+     *
+     * @param newText
+     * @return
+     */
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        Log.e(TAG, "onQueryTextChange: " + newText);
+        return false;
+    }
+
+    /**
      * 侧滑点击事件
      *
      * @param item
@@ -175,17 +199,50 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        switch (item.getItemId()) {
+            case R.id.nav_mytopic:
+                startActivity(MyTopicActivity.class);
+                break;
+            case R.id.nav_myfavorite:
+                startActivity(MyFavoriteActivity.class);
+                break;
+            case R.id.nav_myreplies:
+                startActivity(MyRepliesActivity.class);
+                break;
+            case R.id.nav_myfollow:
+                startActivity(MyFollowActivity.class);
+                break;
+            case R.id.nav_settings:
+                startActivity(SettingsActivity.class);
+                break;
+            case R.id.nav_about:
+                startActivity(AboutActivity.class);
+                break;
 
+        }
         drawer.closeDrawers();
         return true;
+    }
+
+    /**
+     * 头像的点击事件
+     *
+     * @param view
+     */
+    @Override
+    public void onClick(View view) {
+        drawer.closeDrawers();
+        if (mPresenter.isLogin()) {
+            startActivity(MyInfoActivity.class);
+        } else {
+            startActivity(LoginActivity.class);
+        }
     }
 
     /**
      * 底边栏点击事件
      */
     class onBnvItemSelect implements BottomNavigationView.OnNavigationItemSelectedListener {
-
-
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Log.e(TAG, "onNavigationItemSelected: click");
@@ -210,7 +267,6 @@ public class MainActivity extends BaseActivity
             return true;
         }
     }
-
 
     /**
      * @param from 刚显示的Fragment,马上就要被隐藏了
@@ -245,46 +301,19 @@ public class MainActivity extends BaseActivity
     }
 
     /**
-     * 头像的点击事件
+     * eventbus消息处理登录和注销后的显示操作
      *
-     * @param view
+     * @param event
      */
-    @Override
-    public void onClick(View view) {
-        drawer.closeDrawers();
-        if (mPresenter.isLogin()) {
-            startActivity(new Intent(mActivity, MyInfoActivity.class));
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void messageEventBus(MessageEvent event) {
+        if (event.getWhat() == 1) {
+            mPresenter.showHeader();
         } else {
-            startActivity(new Intent(mActivity, LoginActivity.class));
+            iv_head.setImageResource(R.mipmap.icon);
+            tv_accounts.setText("");
         }
     }
-
-
-    /**
-     * SearchView提交回调
-     *
-     * @param query
-     * @return
-     */
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        Log.e(TAG, "onQueryTextSubmit: " + query);
-        return false;
-    }
-
-
-    /**
-     * SearchView输入改变回调
-     *
-     * @param newText
-     * @return
-     */
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        Log.e(TAG, "onQueryTextChange: " + newText);
-        return false;
-    }
-
 
     /**
      * 登录成功后会执行该方法显示用户头像和名称
@@ -298,23 +327,14 @@ public class MainActivity extends BaseActivity
         tv_accounts.setText(userName);
     }
 
-    /**
-     * eventbus消息处理登录和注销后的显示操作
-     * @param event
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void messageEventBus(MessageEvent event) {
-        if (event.getWhat() == 1) {
-            mPresenter.showHeader();
-        } else {
-            iv_head.setImageResource(R.mipmap.icon);
-            tv_accounts.setText("");
-        }
-    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    private void startActivity(Class c) {
+        startActivity(new Intent(mActivity, c));
     }
 }
 
