@@ -26,7 +26,7 @@ public class MyInfoPresenter extends BasePresenter{
     private Context mContext;
 
     public MyInfoPresenter(IBaseView iView) {
-        super(iView);
+        super((Context) iView);
         mContext = (Context) iView;
         mInfoView = (IInfoView) iView;
         myInfoModel = new MyInfoModel();

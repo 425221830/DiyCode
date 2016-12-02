@@ -63,7 +63,6 @@ public class MyInfoActivity extends BaseActivity implements IInfoView {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
             getWindow().setNavigationBarColor(Color.TRANSPARENT);
         }
-        setBackEnable(true);
         mPresenter = new MyInfoPresenter(this);
         mPresenter.init();
     }

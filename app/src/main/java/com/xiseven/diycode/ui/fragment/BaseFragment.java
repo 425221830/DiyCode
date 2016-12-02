@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.xiseven.diycode.ui.iView.IBaseView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 
 /**
@@ -44,7 +46,7 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(getContentViewId(), null);
+        view = inflater.inflate(getContentViewId(), container, false);
         ButterKnife.bind(this, view);
         return view;
     }

@@ -25,7 +25,7 @@ public class MainPresenter extends BasePresenter {
     private IMainModel mMainModel;
 
     public MainPresenter(IBaseView iView) {
-        super(iView);
+        super((Context) iView);
         mContext = (Context) iView;
         mMainView = (IMainView) iView;
         mMainModel = new MainModel();

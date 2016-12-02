@@ -16,8 +16,8 @@ import org.json.JSONObject;
 public class BasePresenter {
     private Context mContext;
 
-    public BasePresenter(IBaseView iView) {
-        mContext = (Context) iView;
+    public BasePresenter(Context context) {
+        mContext = context;
     }
 
     /**

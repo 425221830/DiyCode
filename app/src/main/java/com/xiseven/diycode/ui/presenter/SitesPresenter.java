@@ -2,6 +2,7 @@ package com.xiseven.diycode.ui.presenter;
 
 import android.content.Context;
 
+import com.xiseven.diycode.http.MyCallBack;
 import com.xiseven.diycode.model.impl.SitesModel;
 import com.xiseven.diycode.ui.iView.IBaseView;
 import com.xiseven.diycode.ui.iView.ISitesView;
@@ -12,16 +13,27 @@ import com.xiseven.diycode.ui.iView.ISitesView;
 
 public class SitesPresenter extends BasePresenter {
     ISitesView mView;
-    Context mContext;
     private SitesModel mModel;
 
-    public SitesPresenter(IBaseView iView) {
-        super(iView);
+    public SitesPresenter(IBaseView iView, Context context) {
+        super(context);
         mView = (ISitesView) iView;
-        mContext = (Context) iView;
         mModel = new SitesModel();
     }
     public void initSites() {
-        mModel.getSites();
+        mView.showProgress();
+        mModel.getSites(new MyCallBack() {
+            @Override
+            public void success() {
+                mView.setAdapter(mModel.sitesList);
+                mView.hideProgress();
+            }
+
+            @Override
+            public void failed() {
+                mView.hideProgress();
+            }
+        });
+
     }
 }

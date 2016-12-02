@@ -51,8 +51,6 @@ public class LoginActivity extends BaseActivity implements ILoginView {
         mPresenter = new LoginPresenter(this);
         progressDialog = new ProgressDialog(mActivity);
         progressDialog.setMessage("登录中...");
-        //设置滑动返回
-        setBackEnable(true);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {

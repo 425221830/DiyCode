@@ -27,6 +27,7 @@
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.MyInfoActivity" />
+        <activity android:name=".ui.activity.SitesActivity" />
     </application>
 
 </manifest>

@@ -25,7 +25,7 @@ public class LoginPresenter extends BasePresenter {
     private Context mContext;
 
     public LoginPresenter(IBaseView iView) {
-        super(iView);
+        super((Context) iView);
         mContext = (Context) iView;
         mLoginView = (ILoginView) iView;
         mLoginModel = new LoginModel();
