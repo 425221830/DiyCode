@@ -32,6 +32,7 @@ public class SitesPresenter extends BasePresenter {
             @Override
             public void failed() {
                 mView.hideProgress();
+                mView.failed();
             }
         });
 

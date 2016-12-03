@@ -3,9 +3,7 @@ package com.xiseven.diycode.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -16,9 +14,9 @@ import com.xiseven.diycode.ui.iView.ISitesView;
 import com.xiseven.diycode.ui.presenter.SitesPresenter;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by XISEVEN on 2016/11/22.
@@ -29,6 +27,8 @@ public class SitesFragment extends BaseFragment implements ISitesView {
     RecyclerView recView_sites;
     @BindView(R.id.pd_sites)
     ProgressBar pb_sites;
+    @BindView(R.id.tv_sites)
+    TextView tv_sites;
     SitesPresenter mPresenter;
 
     @Override
@@ -41,13 +41,6 @@ public class SitesFragment extends BaseFragment implements ISitesView {
         mPresenter = new SitesPresenter(this, mActivity);
         recView_sites.setLayoutManager(new LinearLayoutManager(mActivity));
         mPresenter.initSites();
-        recView_sites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
     }
 
     @Override
@@ -60,9 +53,22 @@ public class SitesFragment extends BaseFragment implements ISitesView {
         pb_sites.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * 加载失败后显示刷新按钮
+     */
+    @Override
+    public void failed() {
+        tv_sites.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick(R.id.tv_sites)
+    void failedClick() {
+        tv_sites.setVisibility(View.GONE);
+        mPresenter.initSites();
+    }
+
     @Override
     public void setAdapter(List<Sites> sitesList) {
         recView_sites.setAdapter(new SitesAdapter(mActivity, sitesList));
     }
-
 }

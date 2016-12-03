@@ -3,7 +3,6 @@ package com.xiseven.diycode.adapter;
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +10,7 @@ import android.widget.TextView;
 
 import com.xiseven.diycode.R;
 import com.xiseven.diycode.bean.Sites;
-import com.xiseven.diycode.ui.fragment.SitesFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

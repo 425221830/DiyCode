@@ -11,6 +11,6 @@ import java.util.List;
 public interface ISitesView extends IBaseView {
     void hideProgress();
     void showProgress();
-
+    void failed();
     void setAdapter(List<Sites> sitesList);
 }

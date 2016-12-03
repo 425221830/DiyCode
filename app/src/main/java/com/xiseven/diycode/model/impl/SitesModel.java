@@ -27,8 +27,13 @@ public class SitesModel implements ISitesModel {
         sites.enqueue(new Callback<List<Sites>>() {
             @Override
             public void onResponse(Call<List<Sites>> call, Response<List<Sites>> response) {
-                sitesList = response.body();
-                callBack.success();
+                if (response.isSuccessful()) {
+                    sitesList = response.body();
+                    callBack.success();
+                } else {
+                    callBack.failed();
+                }
+
             }
 
             @Override

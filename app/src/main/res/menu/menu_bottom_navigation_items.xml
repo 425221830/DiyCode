@@ -3,20 +3,20 @@
     <item
         android:id="@+id/bnv_item_news"
         android:checked="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/bnv_news"
         android:title="新闻"/>
 
     <item
         android:id="@+id/bnv_item_projects"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/bnv_projects"
         android:title="项目"/>
 
     <item
         android:id="@+id/bnv_item_topics"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/bnv_topics"
         android:title="社区"/>
     <item
         android:id="@+id/bnv_item_sites"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/bnv_sites"
         android:title="酷站"/>
 </menu>

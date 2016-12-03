@@ -15,9 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.xiseven.diycode.R;
-import com.xiseven.diycode.ui.presenter.BasePresenter;
-import com.xiseven.diycode.ui.presenter.LoginPresenter;
 import com.xiseven.diycode.ui.iView.ILoginView;
+import com.xiseven.diycode.ui.presenter.LoginPresenter;
 
 import butterknife.BindView;
 

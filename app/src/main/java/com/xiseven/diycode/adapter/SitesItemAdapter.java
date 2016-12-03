@@ -3,7 +3,6 @@ package com.xiseven.diycode.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.xiseven.diycode.R;
 import com.xiseven.diycode.bean.Sites;
-import com.xiseven.diycode.ui.activity.SitesActivity;
-import com.xiseven.diycode.ui.fragment.SitesFragment;
+import com.xiseven.diycode.ui.activity.WebActivity;
 
 import java.util.List;
 
@@ -50,7 +48,7 @@ public class SitesItemAdapter extends RecyclerView.Adapter<SitesItemAdapter.MyHo
         holder.sites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, SitesActivity.class);
+                Intent intent = new Intent(mContext, WebActivity.class);
                 intent.putExtra("Url", mList.get(position).getUrl());
                 mContext.startActivity(intent);
             }
