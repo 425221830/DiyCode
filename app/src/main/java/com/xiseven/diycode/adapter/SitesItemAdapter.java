@@ -40,7 +40,7 @@ public class SitesItemAdapter extends RecyclerView.Adapter<SitesItemAdapter.MyHo
     }
 
     @Override
-    public void onBindViewHolder(MyHolder holder, final int position) {
+    public void onBindViewHolder(final MyHolder holder, int position) {
         holder.tv_sites_name.setText(mList.get(position).getName());
         Picasso.with(mContext)
                 .load(mList.get(position).getAvatar_url())
@@ -49,7 +49,8 @@ public class SitesItemAdapter extends RecyclerView.Adapter<SitesItemAdapter.MyHo
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, WebActivity.class);
-                intent.putExtra("Url", mList.get(position).getUrl());
+                intent.putExtra("Url", mList.get(holder.getAdapterPosition()).getUrl());
+                intent.putExtra("title", mList.get(holder.getAdapterPosition()).getName());
                 mContext.startActivity(intent);
             }
         });

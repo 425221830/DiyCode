@@ -2,16 +2,10 @@ package com.xiseven.diycode.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.MenuCompat;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -20,7 +14,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.xiseven.diycode.R;
 
@@ -37,7 +30,6 @@ public class WebActivity extends BaseActivity {
     ProgressBar pb_web;
     private WebSettings settings;
     private String url;
-    private ShareActionProvider shareActionProvider;
 
     @Override
     public int getContentViewId() {
@@ -46,14 +38,13 @@ public class WebActivity extends BaseActivity {
 
     @Override
     protected void initAllMembers(Bundle savedInstanceState) {
-        Toolbar toolbar = initToolbar("酷站");
-
+        Toolbar toolbar = initToolbar(getIntent().getStringExtra("title"));
         url = getIntent().getStringExtra("Url");
         initWebView();
         wv_web.loadUrl(url);
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint({"SetJavaScriptEnabled"})
     private void initWebView() {
         settings = wv_web.getSettings();
 
@@ -79,6 +70,7 @@ public class WebActivity extends BaseActivity {
                 }
 
             }
+
         });
         settings.setJavaScriptEnabled(true);  //支持js
         //设置自适应屏幕，两者合用
@@ -115,18 +107,22 @@ public class WebActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_share:
-
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(wv_web.getUrl()));
-                startActivity(intent);
-//
-//                Intent shareIntent = new Intent();
-//                shareIntent.setAction(Intent.ACTION_SEND);
-//                shareIntent.putExtra(Intent.EXTRA_TEXT, wv_web.getUrl());
-//                shareIntent.setType("text/plain");
-//                startActivity(shareIntent);
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "分享");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, wv_web.getUrl());
+                shareIntent.setType("text/plain");
+                startActivity(shareIntent);
                 break;
         }
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (wv_web != null) {
+            wv_web.destroy();
+        }
+        super.onDestroy();
     }
 }

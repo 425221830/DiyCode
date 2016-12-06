@@ -1,12 +1,10 @@
 package com.xiseven.diycode.ui.presenter;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.LogPrinter;
 
 import com.xiseven.diycode.bean.MessageEvent;
 import com.xiseven.diycode.http.MyCallBack;
-import com.xiseven.diycode.model.ILoginModel;
 import com.xiseven.diycode.model.impl.LoginModel;
 import com.xiseven.diycode.ui.iView.IBaseView;
 import com.xiseven.diycode.ui.iView.ILoginView;
@@ -21,7 +19,7 @@ import org.greenrobot.eventbus.EventBus;
 public class LoginPresenter extends BasePresenter {
     private static final String TAG = LogPrinter.class.getSimpleName();
     private ILoginView mLoginView;
-    private ILoginModel mLoginModel;
+    private LoginModel mLoginModel;
     private Context mContext;
 
     public LoginPresenter(IBaseView iView) {

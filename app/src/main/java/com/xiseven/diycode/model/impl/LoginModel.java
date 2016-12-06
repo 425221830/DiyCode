@@ -11,7 +11,6 @@ import com.xiseven.diycode.bean.User;
 import com.xiseven.diycode.constant.C;
 import com.xiseven.diycode.http.BuildApi;
 import com.xiseven.diycode.http.MyCallBack;
-import com.xiseven.diycode.model.ILoginModel;
 import com.xiseven.diycode.utils.BitmapUtils;
 import com.xiseven.diycode.utils.SPUtils;
 
@@ -27,7 +26,7 @@ import retrofit2.Response;
  * Created by XISEVEN on 2016/11/24.
  */
 
-public class LoginModel implements ILoginModel {
+public class LoginModel {
 
     private static final String TAG = LoginModel.class.getSimpleName();
     private User user;
@@ -41,7 +40,6 @@ public class LoginModel implements ILoginModel {
      * @param password
      * @param callback
      */
-    @Override
     public void getToken(final String username, final String password, final MyCallBack callback) {
         final Call<JsonObject> tokenCall =
                 BuildApi.getAPIService().getToken(C.client_id, C.client_secret, "password", password, username);
@@ -77,7 +75,6 @@ public class LoginModel implements ILoginModel {
      * 注册设备
      *
      */
-    @Override
     public void postDevices(final MyCallBack myCallBack) {
         Call<JsonObject> call = BuildApi.getAPIService().postDevices(platform, token);
         call.enqueue(new Callback<JsonObject>() {
@@ -99,7 +96,6 @@ public class LoginModel implements ILoginModel {
      * 获取我的信息
      *
      */
-    @Override
     public void getMyInfo(final MyCallBack myCallBack) {
         Call<User> myInfo = BuildApi.getAPIService().getMyInfo(C.getRequestHeaderValue(token));
         myInfo.enqueue(new Callback<User>() {

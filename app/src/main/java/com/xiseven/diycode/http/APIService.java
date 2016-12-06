@@ -1,6 +1,7 @@
 package com.xiseven.diycode.http;
 
 import com.google.gson.JsonObject;
+import com.xiseven.diycode.bean.News;
 import com.xiseven.diycode.bean.Sites;
 import com.xiseven.diycode.bean.User;
 
@@ -16,6 +17,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
+import rx.Observable;
 
 /**
  * Created by XISEVEN on 2016/11/29.
@@ -47,5 +49,10 @@ public interface APIService {
 
     @GET("sites.json")
     Call<List<Sites>> getSites();
+
+    @GET("news.json")
+    Observable<List<News>> getNews(@Query("node_id") Integer node_id,
+                                   @Query("offset") Integer offset,
+                                   @Query("limit") Integer limit);
 }
 

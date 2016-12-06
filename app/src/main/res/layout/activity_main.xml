@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom|end"
-                android:background="#9fff"
+                android:background="#efff"
                 app:layout_behavior="com.xiseven.diycode.custom.BottomNavigationBehavior"
                 app:menu="@menu/menu_bottom_navigation_items" />
         </android.support.design.widget.CoordinatorLayout>

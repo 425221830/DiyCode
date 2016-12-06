@@ -6,7 +6,6 @@ import com.google.gson.Gson;
 import com.xiseven.diycode.bean.MessageEvent;
 import com.xiseven.diycode.bean.User;
 import com.xiseven.diycode.http.MyCallBack;
-import com.xiseven.diycode.model.IMyInfoModel;
 import com.xiseven.diycode.model.impl.MyInfoModel;
 import com.xiseven.diycode.ui.iView.IBaseView;
 import com.xiseven.diycode.ui.iView.IInfoView;
@@ -21,7 +20,7 @@ import org.greenrobot.eventbus.EventBus;
 
 public class MyInfoPresenter extends BasePresenter{
 
-    private IMyInfoModel myInfoModel;
+    private MyInfoModel myInfoModel;
     private IInfoView mInfoView;
     private Context mContext;
 

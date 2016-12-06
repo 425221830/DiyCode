@@ -1,10 +1,8 @@
 package com.xiseven.diycode.model.impl;
 
 import com.xiseven.diycode.app.DiyCodeApp;
-import com.xiseven.diycode.http.APIService;
 import com.xiseven.diycode.http.BuildApi;
 import com.xiseven.diycode.http.MyCallBack;
-import com.xiseven.diycode.model.IMyInfoModel;
 import com.xiseven.diycode.utils.SPUtils;
 
 import okhttp3.ResponseBody;
@@ -16,7 +14,7 @@ import retrofit2.Response;
  * Created by XISEVEN on 2016/12/1.
  */
 
-public class MyInfoModel implements IMyInfoModel {
+public class MyInfoModel {
     public final String platform = "android";
 
     public void deleteDevices(final MyCallBack callBack) {

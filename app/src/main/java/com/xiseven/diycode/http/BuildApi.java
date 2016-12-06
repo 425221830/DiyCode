@@ -4,6 +4,7 @@ import com.xiseven.diycode.app.DiyCodeApp;
 import com.xiseven.diycode.constant.C;
 
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -17,6 +18,7 @@ public class BuildApi {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(C.baseUrl) //设置Base的访问路径
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create()) //设置默认的解析库：Gson
                     .client(DiyCodeApp.defaultOkHttpClient())
                     .build();

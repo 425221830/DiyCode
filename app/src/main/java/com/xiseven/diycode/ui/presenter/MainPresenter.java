@@ -2,9 +2,7 @@ package com.xiseven.diycode.ui.presenter;
 
 import android.content.Context;
 
-import com.xiseven.diycode.bean.User;
 import com.xiseven.diycode.http.MyCallBack;
-import com.xiseven.diycode.model.IMainModel;
 import com.xiseven.diycode.model.impl.LoginModel;
 import com.xiseven.diycode.model.impl.MainModel;
 import com.xiseven.diycode.ui.iView.IBaseView;
@@ -22,7 +20,7 @@ import org.json.JSONObject;
 public class MainPresenter extends BasePresenter {
     private Context mContext;
     private IMainView mMainView;
-    private IMainModel mMainModel;
+    private MainModel mMainModel;
 
     public MainPresenter(IBaseView iView) {
         super((Context) iView);

@@ -4,9 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:name=".app.DiyCodeApp"
@@ -28,6 +28,13 @@
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.MyInfoActivity" />
         <activity android:name=".ui.activity.WebActivity" />
+        <activity android:name=".ui.activity.MyTopicActivity" />
+        <activity android:name=".ui.activity.MyFavoriteActivity" />
+        <activity android:name=".ui.activity.MyRepliesActivity" />
+        <activity android:name=".ui.activity.MyFollowActivity" />
+        <activity android:name=".ui.activity.AboutActivity" />
+        <activity android:name=".ui.activity.SettingsActivity" />
+        <activity android:name=".ui.activity.UserInfoActivity" />
     </application>
 
 </manifest>
