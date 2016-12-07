@@ -8,13 +8,12 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 import com.xiseven.diycode.R;
 
 import butterknife.BindView;
@@ -44,7 +43,7 @@ public class WebActivity extends BaseActivity {
         wv_web.loadUrl(url);
     }
 
-    @SuppressLint({"SetJavaScriptEnabled"})
+    @SuppressLint("SetJavaScriptEnabled")
     private void initWebView() {
         settings = wv_web.getSettings();
 
@@ -52,10 +51,12 @@ public class WebActivity extends BaseActivity {
         wv_web.requestFocusFromTouch();
         wv_web.setWebViewClient(new WebViewClient() {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                view.loadUrl(request.toString());
+            public boolean shouldOverrideUrlLoading(WebView webView, String s) {
+                webView.loadUrl(s);
                 return true;
             }
+
+
         });
         wv_web.setWebChromeClient(new WebChromeClient() {
 
@@ -68,9 +69,7 @@ public class WebActivity extends BaseActivity {
                 } else {
                     pb_web.setVisibility(View.VISIBLE);
                 }
-
             }
-
         });
         settings.setJavaScriptEnabled(true);  //支持js
         //设置自适应屏幕，两者合用
@@ -82,8 +81,8 @@ public class WebActivity extends BaseActivity {
         settings.setDisplayZoomControls(false); //隐藏原生的缩放控件
         settings.setLoadsImagesAutomatically(true);  //支持自动加载图片
         settings.setDefaultTextEncodingName("utf-8");//设置编码格式
-
         settings.setRenderPriority(WebSettings.RenderPriority.HIGH);  //提高渲染的优先级
+
 
     }
 

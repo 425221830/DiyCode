@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.util.Log;
 
+import com.tencent.smtt.sdk.QbSdk;
 import com.xiseven.diycode.utils.NetUtils;
 
 import java.io.File;
@@ -34,6 +35,8 @@ public class DiyCodeApp extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
+        //初始化腾讯x5浏览服务
+        QbSdk.initX5Environment(mContext, null);
     }
     public static Handler getHandler() {
         if (mHandler == null) {
