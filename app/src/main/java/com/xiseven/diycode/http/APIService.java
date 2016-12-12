@@ -2,6 +2,7 @@ package com.xiseven.diycode.http;
 
 import com.google.gson.JsonObject;
 import com.xiseven.diycode.bean.News;
+import com.xiseven.diycode.bean.Project;
 import com.xiseven.diycode.bean.Sites;
 import com.xiseven.diycode.bean.User;
 
@@ -54,5 +55,10 @@ public interface APIService {
     Observable<List<News>> getNews(@Query("node_id") Integer node_id,
                                    @Query("offset") Integer offset,
                                    @Query("limit") Integer limit);
+
+    @GET("projects.json")
+    Observable<List<Project>> getProjects(@Query("node_id") Integer node_id,
+                                          @Query("offset") Integer offset,
+                                          @Query("limit") Integer limit);
 }
 

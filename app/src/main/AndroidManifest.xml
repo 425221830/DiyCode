@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.MainActivity" />
-        <activity android:name=".ui.activity.LoginActivity" />
+        <activity android:name=".ui.activity.LoginActivity"/>
         <activity android:name=".ui.activity.MyInfoActivity" />
         <activity
             android:name=".ui.activity.WebActivity"
@@ -40,6 +40,9 @@
         <activity android:name=".ui.activity.AboutActivity" />
         <activity android:name=".ui.activity.SettingsActivity" />
         <activity android:name=".ui.activity.UserInfoActivity" />
+        <activity android:name=".ui.activity.ProjectActivity"
+            android:theme="@style/AppTheme.NoActionBar.Transitions"/>
+
     </application>
 
 </manifest>

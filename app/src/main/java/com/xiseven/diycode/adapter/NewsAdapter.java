@@ -15,7 +15,9 @@ import com.xiseven.diycode.R;
 import com.xiseven.diycode.bean.News;
 import com.xiseven.diycode.ui.activity.UserInfoActivity;
 import com.xiseven.diycode.ui.activity.WebActivity;
+import com.xiseven.diycode.utils.DateUtils;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +33,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyHolder> {
 
     private Context mContext;
     private List<News> newsList = new ArrayList<>();
-
-
-    public List<News> getNewsList() {
-        return newsList;
-    }
 
     public void setNewsList(List<News> newsList) {
         this.newsList = newsList;
@@ -61,6 +58,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyHolder> {
         holder.tv_username.setText(newsList.get(position).getUser().getName());
         holder.tv_news_nodename.setText(newsList.get(position).getNode_name());
         holder.tv_news_title.setText(newsList.get(position).getTitle());
+        try {
+            holder.tv_news_time.setText(DateUtils.getTimeAgo(newsList.get(position).getUpdated_at()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         //点击头像打开用户信息页面
         holder.iv_head.setOnClickListener(new View.OnClickListener() {
@@ -80,20 +82,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyHolder> {
                 mContext.startActivity(intent);
             }
         });
-        //点击查看评论打开评论页面
-        holder.tv_news_replies.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        //点赞
-        holder.btn_like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
         //打开news源地址
         holder.news_item.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +89,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyHolder> {
                 Intent intent = new Intent(mContext, WebActivity.class);
                 intent.putExtra("Url", newsList.get(position).getAddress());
                 mContext.startActivity(intent);
+            }
+        });
+        //打开该节点的内容
+        holder.tv_news_nodename.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
@@ -121,10 +116,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyHolder> {
         TextView tv_news_time;
         @BindView(R.id.tv_news_title)
         TextView tv_news_title;
-        @BindView(R.id.tv_news_replies)
-        TextView tv_news_replies;
-        @BindView(R.id.btn_like)
-        Button btn_like;
         @BindView(R.id.news_item)
         View news_item;
 

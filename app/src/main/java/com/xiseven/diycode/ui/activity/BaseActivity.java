@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
  * Created by XISEVEN on 2016/11/20.
  */
 
-public abstract class BaseActivity extends ParallaxActivityBase implements View.OnClickListener {
+public abstract class BaseActivity extends ParallaxActivityBase {
     private Toolbar toolbar;
 
     /**
@@ -59,14 +59,15 @@ public abstract class BaseActivity extends ParallaxActivityBase implements View.
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         //toolbar点击返回
-        toolbar.setNavigationOnClickListener(this);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         return toolbar;
     }
 
-    @Override
-    public void onClick(View view) {
-        onBackPressed();
-    }
 
 
     @Override

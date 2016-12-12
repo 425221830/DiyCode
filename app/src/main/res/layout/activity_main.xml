@@ -26,10 +26,52 @@
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <include
                 android:id="@+id/content_main"
                 layout="@layout/content_main" />
+
+            <com.getbase.floatingactionbutton.FloatingActionsMenu
+                android:id="@+id/fab_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="56dp"
+                app:layout_behavior="com.xiseven.diycode.custom.BottomNavigationBehavior"
+                app:fab_addButtonColorNormal="@color/pink_pressed"
+                app:fab_addButtonColorPressed="@color/white_pressed"
+                app:fab_addButtonPlusIconColor="@color/white"
+                app:fab_expandDirection="up"
+                app:fab_labelStyle="@style/menu_labels_style"
+                app:fab_labelsPosition="left">
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_create_news"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fab_colorNormal="@color/fab_color"
+                    app:fab_colorPressed="@color/white_pressed"
+                    app:fab_icon="@mipmap/bnv_news"
+                    app:fab_title="@string/fab_create_news" />
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_create_project"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fab_colorNormal="@color/fab_color"
+                    app:fab_colorPressed="@color/white_pressed"
+                    app:fab_icon="@mipmap/bnv_projects"
+                    app:fab_title="@string/fab_create_project" />
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_create_topic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fab_colorNormal="@color/fab_color"
+                    app:fab_colorPressed="@color/white_pressed"
+                    app:fab_icon="@mipmap/bnv_topics"
+                    app:fab_title="@string/fab_create_topic" />
+            </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
             <android.support.design.widget.BottomNavigationView
                 android:id="@+id/bottomNavigationView"
@@ -39,6 +81,7 @@
                 android:background="#efff"
                 app:layout_behavior="com.xiseven.diycode.custom.BottomNavigationBehavior"
                 app:menu="@menu/menu_bottom_navigation_items" />
+
         </android.support.design.widget.CoordinatorLayout>
 
         <android.support.design.widget.NavigationView

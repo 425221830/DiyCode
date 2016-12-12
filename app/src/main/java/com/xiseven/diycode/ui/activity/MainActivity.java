@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.xiseven.diycode.R;
 import com.xiseven.diycode.bean.MessageEvent;
 import com.xiseven.diycode.ui.fragment.BaseFragment;
@@ -48,7 +50,6 @@ public class MainActivity extends BaseActivity
         View.OnClickListener, SearchView.OnQueryTextListener, IMainView {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final int LOGIN_REQUESTCODE = 0x1000;
 
     List<BaseFragment> fragments;
     @BindView(R.id.content_main)
@@ -69,6 +70,10 @@ public class MainActivity extends BaseActivity
     //上次切换的Fragment
     private Fragment mContent;
     private MainPresenter mPresenter;
+    private FloatingActionsMenu fabMenu;
+    private FloatingActionButton fabNews;
+    private FloatingActionButton fabProject;
+    private FloatingActionButton fabTopic;
 
     /**
      * 设置布局
@@ -94,7 +99,6 @@ public class MainActivity extends BaseActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
         iv_head = (de.hdodenhof.circleimageview.CircleImageView) headerView.findViewById(R.id.iv_head);
@@ -102,6 +106,7 @@ public class MainActivity extends BaseActivity
         tv_accounts = (TextView) headerView.findViewById(R.id.tv_username);
         bottomNavigationView.setOnNavigationItemSelectedListener(new onBnvItemSelect());
         initFragment();
+        initFab();
         //设置默认显示
         switchFragment(mContent, fragments.get(position));
         mPresenter = new MainPresenter(this);
@@ -109,6 +114,16 @@ public class MainActivity extends BaseActivity
             mPresenter.updateLogin();
         }
         EventBus.getDefault().register(this);
+    }
+
+    private void initFab() {
+        fabMenu = (FloatingActionsMenu) findViewById(R.id.fab_menu);
+        fabNews = (FloatingActionButton) findViewById(R.id.fab_create_news);
+        fabProject = (FloatingActionButton) findViewById(R.id.fab_create_project);
+        fabTopic = (FloatingActionButton) findViewById(R.id.fab_create_topic);
+        fabNews.setOnClickListener(this);
+        fabProject.setOnClickListener(this);
+        fabTopic.setOnClickListener(this);
     }
 
     private void initFragment() {
@@ -123,6 +138,8 @@ public class MainActivity extends BaseActivity
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (fabMenu.isExpanded()) {
+            fabMenu.collapse();
         } else {
             super.onBackPressed();
         }
@@ -153,8 +170,9 @@ public class MainActivity extends BaseActivity
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        fabMenu.collapse();
         switch (item.getItemId()) {
+
             case R.id.action_notification:
                 break;
             case R.id.action_settings:
@@ -198,6 +216,7 @@ public class MainActivity extends BaseActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        fabMenu.collapse();
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
             case R.id.nav_mytopic:
@@ -231,12 +250,27 @@ public class MainActivity extends BaseActivity
      */
     @Override
     public void onClick(View view) {
+        fabMenu.collapse();
         drawer.closeDrawers();
-        if (mPresenter.isLogin()) {
-            startActivity(MyInfoActivity.class);
-        } else {
-            startActivity(LoginActivity.class);
+        switch (view.getId()) {
+            case R.id.iv_head:
+                if (mPresenter.isLogin()) {
+                    startActivity(MyInfoActivity.class);
+                } else {
+                    startActivity(LoginActivity.class);
+                }
+                break;
+            case R.id.fab_create_news:
+                Toast.makeText(this, "news", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab_create_project:
+                Toast.makeText(this, "project", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab_create_topic:
+                Toast.makeText(this, "topic", Toast.LENGTH_SHORT).show();
+                break;
         }
+
     }
 
     /**
@@ -245,6 +279,7 @@ public class MainActivity extends BaseActivity
     class onBnvItemSelect implements BottomNavigationView.OnNavigationItemSelectedListener {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            fabMenu.collapse();
             Log.e(TAG, "onNavigationItemSelected: click");
             switch (item.getItemId()) {
                 case R.id.bnv_item_news:

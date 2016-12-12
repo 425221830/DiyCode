@@ -1,10 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
-
+    <style name="AppTheme.NoActionBar.Transitions">
+        <item name="android:windowContentTransitions">true</item>
     </style>
-
 </resources>

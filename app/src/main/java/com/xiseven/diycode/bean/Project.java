@@ -1,10 +1,13 @@
 package com.xiseven.diycode.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by XISEVEN on 2016/12/6.
  */
 
-public class Project {
+public class Project implements Parcelable {
 
     /**
      * id : 453
@@ -265,7 +268,7 @@ public class Project {
         this.last_updated_at = last_updated_at;
     }
 
-    public static class CategoryBean {
+    public static class CategoryBean implements Parcelable {
         /**
          * name : 机器学习 Machine Learning
          * id : 7
@@ -289,9 +292,40 @@ public class Project {
         public void setId(int id) {
             this.id = id;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.name);
+            dest.writeInt(this.id);
+        }
+
+        public CategoryBean() {
+        }
+
+        protected CategoryBean(Parcel in) {
+            this.name = in.readString();
+            this.id = in.readInt();
+        }
+
+        public static final Creator<CategoryBean> CREATOR = new Creator<CategoryBean>() {
+            @Override
+            public CategoryBean createFromParcel(Parcel source) {
+                return new CategoryBean(source);
+            }
+
+            @Override
+            public CategoryBean[] newArray(int size) {
+                return new CategoryBean[size];
+            }
+        };
     }
 
-    public static class SubCategoryBean {
+    public static class SubCategoryBean implements Parcelable {
         /**
          * name : Python
          * id : 68
@@ -315,5 +349,93 @@ public class Project {
         public void setId(int id) {
             this.id = id;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.name);
+            dest.writeInt(this.id);
+        }
+
+        public SubCategoryBean() {
+        }
+
+        protected SubCategoryBean(Parcel in) {
+            this.name = in.readString();
+            this.id = in.readInt();
+        }
+
+        public static final Creator<SubCategoryBean> CREATOR = new Creator<SubCategoryBean>() {
+            @Override
+            public SubCategoryBean createFromParcel(Parcel source) {
+                return new SubCategoryBean(source);
+            }
+
+            @Override
+            public SubCategoryBean[] newArray(int size) {
+                return new SubCategoryBean[size];
+            }
+        };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.description);
+        dest.writeString(this.readme);
+        dest.writeString(this.github);
+        dest.writeString(this.website);
+        dest.writeString(this.download);
+        dest.writeInt(this.star);
+        dest.writeInt(this.fork);
+        dest.writeInt(this.watch);
+        dest.writeString(this.project_cover_url);
+        dest.writeString(this.label_str);
+        dest.writeParcelable(this.category, flags);
+        dest.writeParcelable(this.sub_category, flags);
+        dest.writeString(this.last_updated_at);
+    }
+
+    public Project() {
+    }
+
+    protected Project(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.description = in.readString();
+        this.readme = in.readString();
+        this.github = in.readString();
+        this.website = in.readString();
+        this.download = in.readString();
+        this.star = in.readInt();
+        this.fork = in.readInt();
+        this.watch = in.readInt();
+        this.project_cover_url = in.readString();
+        this.label_str = in.readString();
+        this.category = in.readParcelable(CategoryBean.class.getClassLoader());
+        this.sub_category = in.readParcelable(SubCategoryBean.class.getClassLoader());
+        this.last_updated_at = in.readString();
+    }
+
+    public static final Parcelable.Creator<Project> CREATOR = new Parcelable.Creator<Project>() {
+        @Override
+        public Project createFromParcel(Parcel source) {
+            return new Project(source);
+        }
+
+        @Override
+        public Project[] newArray(int size) {
+            return new Project[size];
+        }
+    };
 }

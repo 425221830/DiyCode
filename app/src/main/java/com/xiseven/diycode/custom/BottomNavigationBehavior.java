@@ -29,7 +29,7 @@ public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<View> {
         if(dy > 0){//上滑隐藏
             if(outAnimator == null){
                 outAnimator = ObjectAnimator.ofFloat(child,"translationY",0,child.getHeight());
-                outAnimator.setDuration(200);
+                outAnimator.setDuration(600);
             }
             if(!outAnimator.isRunning() && child.getTranslationY() <= 0){
                 outAnimator.start();
@@ -37,7 +37,7 @@ public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<View> {
         }else if(dy < 0){//下滑显示
             if(inAnimator == null){
                 inAnimator = ObjectAnimator.ofFloat(child,"translationY",child.getHeight(),0);
-                inAnimator.setDuration(200);
+                inAnimator.setDuration(600);
             }
             if(!inAnimator.isRunning() && child.getTranslationY() >= child.getHeight()){
                 inAnimator.start();
