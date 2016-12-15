@@ -70,6 +70,6 @@ public class ProjectFragment extends BaseFragment implements IProjectsView{
     @Override
     public void getProjectsFailed() {
         recView.setPullLoadMoreCompleted();
-        Toast.makeText(mActivity, "加载失败", Toast.LENGTH_SHORT).show();
+        showToast("加载失败");
     }
 }

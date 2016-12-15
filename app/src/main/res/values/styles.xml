@@ -59,6 +59,7 @@
 
     <style name="menu_labels_style">
         <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:background">@android:drawable/editbox_background_normal</item>
     </style>
 </resources>

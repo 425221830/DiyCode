@@ -38,28 +38,30 @@ public class DiyCodeApp extends Application {
         //初始化腾讯x5浏览服务
         QbSdk.initX5Environment(mContext, null);
     }
+
     public static Handler getHandler() {
         if (mHandler == null) {
             mHandler = new Handler();
         }
         return mHandler;
     }
-public static OkHttpClient defaultOkHttpClient() {
-    OkHttpClient.Builder client = new OkHttpClient.Builder();
-    client.writeTimeout(30 * 1000, TimeUnit.MILLISECONDS);
-    client.readTimeout(20 * 1000, TimeUnit.MILLISECONDS);
-    client.connectTimeout(15 * 1000, TimeUnit.MILLISECONDS);
-    //设置缓存路径
-    File httpCacheDirectory = new File(mContext.getCacheDir(), "okhttpCache");
-    //设置缓存 10M
-    Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
-    client.cache(cache);
-    //设置拦截器
-    client.addInterceptor(LoggingInterceptor);
-    client.addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
-    client.addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
-    return client.build();
-}
+
+    public static OkHttpClient defaultOkHttpClient() {
+        OkHttpClient.Builder client = new OkHttpClient.Builder();
+        client.writeTimeout(30 * 1000, TimeUnit.MILLISECONDS);
+        client.readTimeout(20 * 1000, TimeUnit.MILLISECONDS);
+        client.connectTimeout(15 * 1000, TimeUnit.MILLISECONDS);
+        //设置缓存路径
+        File httpCacheDirectory = new File(mContext.getCacheDir(), "okhttpCache");
+        //设置缓存 10M
+        Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
+        client.cache(cache);
+        //设置拦截器
+        client.addInterceptor(LoggingInterceptor);
+        client.addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
+        client.addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
+        return client.build();
+    }
 
 
     private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {

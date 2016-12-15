@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity
     CircleImageView iv_head;
     TextView tv_accounts;
 
-    private Toolbar toolbar;
+    public Toolbar toolbar;
     private SearchView searchView;
     //选中的Fragment的对应的位置
     private int position = 0;

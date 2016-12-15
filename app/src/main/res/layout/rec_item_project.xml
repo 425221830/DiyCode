@@ -72,7 +72,7 @@
             android:layout_below="@+id/tv_project_category"
             android:layout_marginTop="16dp"
             android:ellipsize="end"
-            android:lines="2"
+            android:maxLines="2"
             android:text="一种基于 NumPy、SciPy 和 matplotlib 的用于数据挖掘和数据分析的工具，其不仅使用起来简单高效，而且还是开源的，可供所有人使用，并且拥有商业可用的 BSD 许可证，在不同的环境下都能很好的被使用。"
             android:textColor="@android:color/black"
             android:textSize="18sp"

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.xiseven.diycode.bean.News;
 import com.xiseven.diycode.bean.Project;
 import com.xiseven.diycode.bean.Sites;
+import com.xiseven.diycode.bean.Topic;
 import com.xiseven.diycode.bean.User;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 import rx.Observable;
@@ -60,5 +62,15 @@ public interface APIService {
     Observable<List<Project>> getProjects(@Query("node_id") Integer node_id,
                                           @Query("offset") Integer offset,
                                           @Query("limit") Integer limit);
+    @GET("topics.json")
+    Observable<List<Topic>> getTopics(@Header("Authorization") String Authorization,
+                                      @Query("type") String type,
+                                      @Query("node_id") Integer node_id,
+                                      @Query("offset") Integer offset,
+                                      @Query("limit") Integer limit);
+
+    @GET("topics/{id}.json")
+    Observable<JsonObject> getTopicBody(@Path("id") String id);
+
 }
 
