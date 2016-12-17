@@ -3,6 +3,7 @@ package com.xiseven.diycode.ui.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -74,6 +75,7 @@ public class MainActivity extends BaseActivity
     private FloatingActionButton fabNews;
     private FloatingActionButton fabProject;
     private FloatingActionButton fabTopic;
+    private long l = 0;
 
     /**
      * 设置布局
@@ -141,7 +143,14 @@ public class MainActivity extends BaseActivity
         } else if (fabMenu.isExpanded()) {
             fabMenu.collapse();
         } else {
-            super.onBackPressed();
+            //连续两次返回退出
+            if (System.currentTimeMillis() - l < 2000) {
+                super.onBackPressed();
+            } else {
+                l = System.currentTimeMillis();
+                showToast("再按一次返回键退出");
+            }
+
         }
     }
 

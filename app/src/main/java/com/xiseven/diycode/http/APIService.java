@@ -5,6 +5,7 @@ import com.xiseven.diycode.bean.News;
 import com.xiseven.diycode.bean.Project;
 import com.xiseven.diycode.bean.Sites;
 import com.xiseven.diycode.bean.Topic;
+import com.xiseven.diycode.bean.TopicReplies;
 import com.xiseven.diycode.bean.User;
 
 import java.util.List;
@@ -62,6 +63,7 @@ public interface APIService {
     Observable<List<Project>> getProjects(@Query("node_id") Integer node_id,
                                           @Query("offset") Integer offset,
                                           @Query("limit") Integer limit);
+
     @GET("topics.json")
     Observable<List<Topic>> getTopics(@Header("Authorization") String Authorization,
                                       @Query("type") String type,
@@ -71,6 +73,10 @@ public interface APIService {
 
     @GET("topics/{id}.json")
     Observable<JsonObject> getTopicBody(@Path("id") String id);
+
+    @GET("topics/{id}/replies.json")
+    Observable<List<TopicReplies>> getTopicReplies(@Path("id") String id,
+                                                   @Query("limit") Integer limit);
 
 }
 

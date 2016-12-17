@@ -21,6 +21,13 @@ public class NewsModel {
 
     public List<News> news;
 
+    /**
+     * 获取新闻列表
+     * @param node_id
+     * @param offset
+     * @param limit
+     * @param callBack
+     */
     public void getNews(Integer node_id, Integer offset, Integer limit, final MyCallBack callBack) {
         Observable<List<News>> newsObservable = BuildApi.getAPIService().getNews(node_id, offset, limit);
         //访问网络切换异步线程

@@ -18,6 +18,13 @@ import rx.schedulers.Schedulers;
 public class ProjectsModel {
     public List<Project> projectList;
 
+    /**
+     * 获取项目列表
+     * @param node_id
+     * @param offset
+     * @param limit
+     * @param callBack
+     */
     public void getProjects(Integer node_id, Integer offset, Integer limit, final MyCallBack callBack) {
         Observable<List<Project>> projects = BuildApi.getAPIService().getProjects(node_id, offset, limit);
         projects.subscribeOn(Schedulers.io())

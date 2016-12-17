@@ -18,6 +18,10 @@ public class SitesModel{
 
     public List<Sites> sitesList;
 
+    /**
+     * 获取酷站列表
+     * @param callBack
+     */
     public void getSites(final MyCallBack callBack) {
         Call<List<Sites>> sites = BuildApi.getAPIService().getSites();
         sites.enqueue(new Callback<List<Sites>>() {

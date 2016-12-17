@@ -69,7 +69,6 @@ public abstract class BaseActivity extends ParallaxActivityBase {
     }
 
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

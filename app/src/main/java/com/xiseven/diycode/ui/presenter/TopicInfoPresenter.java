@@ -35,4 +35,18 @@ public class TopicInfoPresenter extends BasePresenter {
             }
         });
     }
+
+    public void getTopicReplies(Integer id, Integer limit) {
+        topicModel.getTopicReplies(id.toString(), limit, new MyCallBack() {
+            @Override
+            public void success() {
+                mView.setTopicRepliesAdapter(topicModel.repliesList);
+            }
+
+            @Override
+            public void failed() {
+
+            }
+        });
+    }
 }
