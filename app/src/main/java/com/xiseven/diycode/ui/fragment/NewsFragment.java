@@ -71,20 +71,18 @@ public class NewsFragment extends BaseFragment implements INewsView {
 
     /**
      * 更新RecyclerView的news数据
-     * @param mList
+     * @param list
      */
     @Override
-    public void notifyRecView(List<News> mList) {
-        newsAdapter.setNewsList(mList);
+    public void notifyRecView(List list) {
+        newsAdapter.setList(list);
         newsAdapter.notifyDataSetChanged();
         recView.setPullLoadMoreCompleted();
-
     }
 
     @Override
-    public void getNewsFailed() {
+    public void getFailed() {
         recView.setPullLoadMoreCompleted();
-        Toast.makeText(mActivity, "加载失败", Toast.LENGTH_SHORT).show();
+        showToast("加载失败");
     }
-
 }

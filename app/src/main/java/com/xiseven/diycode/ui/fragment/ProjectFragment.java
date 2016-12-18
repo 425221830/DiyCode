@@ -60,15 +60,16 @@ public class ProjectFragment extends BaseFragment implements IProjectsView{
         });
     }
 
+
     @Override
-    public void notifyRecView(List<Project> mList) {
-        projectsAdapter.setProjectList(mList);
+    public void notifyRecView(List list) {
+        projectsAdapter.setList(list);
         projectsAdapter.notifyDataSetChanged();
         recView.setPullLoadMoreCompleted();
     }
 
     @Override
-    public void getProjectsFailed() {
+    public void getFailed() {
         recView.setPullLoadMoreCompleted();
         showToast("加载失败");
     }

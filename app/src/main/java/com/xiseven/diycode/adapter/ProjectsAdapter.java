@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.xiseven.diycode.R;
 import com.xiseven.diycode.bean.Project;
+import com.xiseven.diycode.ui.activity.NodeActivity;
 import com.xiseven.diycode.ui.activity.ProjectActivity;
 import com.xiseven.diycode.ui.activity.WebActivity;
 import com.xiseven.diycode.utils.DateUtils;
@@ -32,14 +33,10 @@ import butterknife.ButterKnife;
  * Created by XISEVEN on 2016/12/7.
  */
 
-public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.MyHolder> {
+public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.MyHolder> implements IAdapter{
     private Context mContext;
     private List<Project> projectList = new ArrayList<>();
     private LayoutInflater inflater;
-
-    public void setProjectList(List<Project> projectList) {
-        this.projectList = projectList;
-    }
 
     public ProjectsAdapter(Context context) {
         mContext = context;
@@ -58,7 +55,27 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.MyHold
                 .into(holder.ivHead);
         holder.tvName.setText(projectList.get(position).getName());
         holder.tvProjectCategory.setText(projectList.get(position).getCategory().getName());
+        holder.tvProjectCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, NodeActivity.class);
+                intent.putExtra("title", projectList.get(position).getCategory().getName());
+                intent.putExtra("node_id", projectList.get(position).getCategory().getId());
+                intent.putExtra("category", "projects");
+                mContext.startActivity(intent);
+            }
+        });
         holder.tvProjectSubCategory.setText(projectList.get(position).getSub_category().getName());
+        holder.tvProjectSubCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, NodeActivity.class);
+                intent.putExtra("title", projectList.get(position).getSub_category().getName());
+                intent.putExtra("node_id", projectList.get(position).getSub_category().getId());
+                intent.putExtra("category", "projects");
+                mContext.startActivity(intent);
+            }
+        });
         holder.tvProjectDes.setText(projectList.get(position).getDescription());
         try {
             holder.tvProjectTime.setText(DateUtils.getTimeAgo(projectList.get(position).getLast_updated_at()));
@@ -94,6 +111,17 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.MyHold
     public int getItemCount() {
         return projectList.size();
     }
+
+    @Override
+    public void setList(List list) {
+        projectList = list;
+    }
+
+    @Override
+    public void notifyChange() {
+        notifyDataSetChanged();
+    }
+
 
     class MyHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_name)

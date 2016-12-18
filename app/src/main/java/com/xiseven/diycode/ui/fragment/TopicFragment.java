@@ -64,14 +64,14 @@ public class TopicFragment extends BaseFragment implements ITopicView {
     }
 
     @Override
-    public void notifyRecView(List<Topic> mList) {
-        topicsAdapter.setProjectList(mList);
+    public void notifyRecView(List list) {
+        topicsAdapter.setList(list);
         topicsAdapter.notifyDataSetChanged();
         recView.setPullLoadMoreCompleted();
     }
 
     @Override
-    public void getProjectsFailed() {
+    public void getFailed() {
         recView.setPullLoadMoreCompleted();
         showToast("加载失败");
     }

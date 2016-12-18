@@ -5,6 +5,7 @@ import android.content.Context;
 import com.xiseven.diycode.http.MyCallBack;
 import com.xiseven.diycode.model.impl.ProjectsModel;
 import com.xiseven.diycode.ui.iView.IBaseView;
+import com.xiseven.diycode.ui.iView.INodeView;
 import com.xiseven.diycode.ui.iView.IProjectsView;
 
 /**
@@ -15,11 +16,11 @@ public class ProjectPresenter extends BasePresenter {
 
 
     private ProjectsModel mModel;
-    private IProjectsView mView;
+    private INodeView mView;
 
     public ProjectPresenter(IBaseView iView, Context context) {
         super(context);
-        mView = (IProjectsView) iView;
+        mView = (INodeView) iView;
         mModel = new ProjectsModel();
     }
 
@@ -32,7 +33,7 @@ public class ProjectPresenter extends BasePresenter {
 
             @Override
             public void failed() {
-                mView.getProjectsFailed();
+                mView.getFailed();
             }
         });
     }

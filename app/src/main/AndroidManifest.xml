@@ -43,6 +43,7 @@
         <activity android:name=".ui.activity.ProjectActivity"
             android:theme="@style/AppTheme.NoActionBar.Transitions"/>
         <activity android:name=".ui.activity.TopicInfoActivity" />
+        <activity android:name=".ui.activity.NodeActivity" />
 
     </application>
 

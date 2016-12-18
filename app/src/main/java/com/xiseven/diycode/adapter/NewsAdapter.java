@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.xiseven.diycode.R;
 import com.xiseven.diycode.bean.News;
+import com.xiseven.diycode.ui.activity.NodeActivity;
 import com.xiseven.diycode.ui.activity.UserInfoActivity;
 import com.xiseven.diycode.ui.activity.WebActivity;
 import com.xiseven.diycode.utils.DateUtils;
@@ -28,15 +29,12 @@ import butterknife.ButterKnife;
  * Created by XISEVEN on 2016/12/5.
  */
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyHolder> {
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyHolder> implements IAdapter{
 
 
     private Context mContext;
     private List<News> newsList = new ArrayList<>();
 
-    public void setNewsList(List<News> newsList) {
-        this.newsList = newsList;
-    }
 
     private LayoutInflater inflater;
 
@@ -95,7 +93,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyHolder> {
         holder.tv_news_nodename.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(mContext, NodeActivity.class);
+                intent.putExtra("title", newsList.get(position).getNode_name());
+                intent.putExtra("node_id", newsList.get(position).getNode_id());
+                intent.putExtra("category", "news");
+                mContext.startActivity(intent);
             }
         });
     }
@@ -103,6 +105,17 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyHolder> {
     @Override
     public int getItemCount() {
         return newsList.size();
+    }
+
+    @Override
+    public void setList(List list) {
+        newsList = list;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyChange() {
+        notifyDataSetChanged();
     }
 
     class MyHolder extends RecyclerView.ViewHolder {

@@ -9,6 +9,7 @@ import com.xiseven.diycode.http.BuildApi;
 import com.xiseven.diycode.http.MyCallBack;
 import com.xiseven.diycode.model.impl.TopicModel;
 import com.xiseven.diycode.ui.iView.IBaseView;
+import com.xiseven.diycode.ui.iView.INodeView;
 import com.xiseven.diycode.ui.iView.ITopicView;
 import com.xiseven.diycode.utils.SPUtils;
 
@@ -21,14 +22,14 @@ import rx.Observable;
  */
 
 public class TopicPresenter extends BasePresenter {
-    private ITopicView mView;
+    private INodeView mView;
     private TopicModel mModel;
     private Context mContext;
 
     public TopicPresenter(IBaseView iView, Context context) {
         super(context);
         mContext = context;
-        mView = (ITopicView) iView;
+        mView = (INodeView) iView;
         mModel = new TopicModel();
     }
 
@@ -41,7 +42,7 @@ public class TopicPresenter extends BasePresenter {
 
             @Override
             public void failed() {
-                mView.getProjectsFailed();
+                mView.getFailed();
             }
         });
     }

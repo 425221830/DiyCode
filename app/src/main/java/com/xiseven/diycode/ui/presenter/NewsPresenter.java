@@ -6,6 +6,7 @@ import com.xiseven.diycode.http.MyCallBack;
 import com.xiseven.diycode.model.impl.NewsModel;
 import com.xiseven.diycode.ui.iView.IBaseView;
 import com.xiseven.diycode.ui.iView.INewsView;
+import com.xiseven.diycode.ui.iView.INodeView;
 
 /**
  * Created by XISEVEN on 2016/12/5.
@@ -14,11 +15,11 @@ import com.xiseven.diycode.ui.iView.INewsView;
 public class NewsPresenter extends BasePresenter {
 
     private NewsModel mModel;
-    private INewsView mView;
+    private INodeView mView;
 
     public NewsPresenter(IBaseView iView, Context context) {
         super(context);
-        mView = (INewsView) iView;
+        mView = (INodeView) iView;
         mModel = new NewsModel();
     }
 
@@ -31,7 +32,7 @@ public class NewsPresenter extends BasePresenter {
 
             @Override
             public void failed() {
-                mView.getNewsFailed();
+                mView.getFailed();
             }
         });
     }

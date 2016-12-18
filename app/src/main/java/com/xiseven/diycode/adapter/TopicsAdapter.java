@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.xiseven.diycode.R;
 import com.xiseven.diycode.bean.Topic;
+import com.xiseven.diycode.ui.activity.NodeActivity;
 import com.xiseven.diycode.ui.activity.TopicInfoActivity;
 import com.xiseven.diycode.utils.DateUtils;
 
@@ -27,14 +28,11 @@ import butterknife.ButterKnife;
  * Created by XISEVEN on 2016/12/15.
  */
 
-public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.MyHolder>{
+public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.MyHolder> implements IAdapter{
     private Context mContext;
     private List<Topic> topicList = new ArrayList<>();
     private LayoutInflater inflater;
 
-    public void setProjectList(List<Topic> topicList) {
-        this.topicList = topicList;
-    }
     public TopicsAdapter(Context context) {
         mContext = context;
         inflater = LayoutInflater.from(context);
@@ -52,6 +50,16 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.MyHolder>{
                 .into(holder.ivHead);
         holder.tvUsername.setText(topicList.get(position).getUser().getName());
         holder.tvTopicNodename.setText(topicList.get(position).getNode_name());
+        holder.tvTopicNodename.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, NodeActivity.class);
+                intent.putExtra("title", topicList.get(position).getNode_name());
+                intent.putExtra("node_id", topicList.get(position).getNode_id());
+                intent.putExtra("category", "topics");
+                mContext.startActivity(intent);
+            }
+        });
         try {
             holder.tvTopicTime.setText(DateUtils.getTimeAgo(topicList.get(position).getUpdated_at()));
         } catch (ParseException e) {
@@ -72,6 +80,16 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.MyHolder>{
     @Override
     public int getItemCount() {
         return topicList.size();
+    }
+
+    @Override
+    public void setList(List list) {
+        topicList = list;
+    }
+
+    @Override
+    public void notifyChange() {
+        notifyDataSetChanged();
     }
 
     class MyHolder extends RecyclerView.ViewHolder {

@@ -8,8 +8,5 @@ import java.util.List;
  * Created by XISEVEN on 2016/12/5.
  */
 
-public interface INewsView extends IBaseView{
-    void notifyRecView(List<News> mList);
-
-    void getNewsFailed();
+public interface INewsView extends INodeView{
 }
