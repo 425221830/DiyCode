@@ -15,6 +15,7 @@ import com.xiseven.diycode.R;
 import com.xiseven.diycode.bean.Topic;
 import com.xiseven.diycode.ui.activity.NodeActivity;
 import com.xiseven.diycode.ui.activity.TopicInfoActivity;
+import com.xiseven.diycode.ui.activity.UserInfoActivity;
 import com.xiseven.diycode.utils.DateUtils;
 
 import java.text.ParseException;
@@ -72,6 +73,26 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.MyHolder> 
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, TopicInfoActivity.class);
                 intent.putExtra("topic", topicList.get(position));
+                mContext.startActivity(intent);
+            }
+        });
+        //点击头像打开用户信息页面
+        holder.ivHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, UserInfoActivity.class);
+                intent.putExtra("userLogin", topicList.get(position).getUser().getLogin());
+                intent.putExtra("userName", topicList.get(position).getUser().getName());
+                mContext.startActivity(intent);
+            }
+        });
+        //点击用户名打开用户信息页面
+        holder.tvUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, UserInfoActivity.class);
+                intent.putExtra("userLogin", topicList.get(position).getUser().getLogin());
+                intent.putExtra("userName", topicList.get(position).getUser().getName());
                 mContext.startActivity(intent);
             }
         });

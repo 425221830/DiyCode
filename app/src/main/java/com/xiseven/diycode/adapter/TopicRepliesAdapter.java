@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.xiseven.diycode.R;
 import com.xiseven.diycode.bean.TopicReplies;
+import com.xiseven.diycode.ui.activity.TopicInfoActivity;
 import com.xiseven.diycode.utils.DateUtils;
 import com.zzhoujay.richtext.RichText;
 
@@ -30,12 +31,14 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<TopicRepliesAdapte
     private Context mContext;
     private List<TopicReplies> repliesList = new ArrayList<>();
     private LayoutInflater inflater;
+    private TopicInfoActivity activity;
 
     public void setRepliesList(List<TopicReplies> repliesList) {
         this.repliesList = repliesList;
     }
 
     public TopicRepliesAdapter(Context context) {
+        activity = (TopicInfoActivity) context;
         this.mContext = context;
         inflater = LayoutInflater.from(context);
 
@@ -58,6 +61,12 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<TopicRepliesAdapte
             e.printStackTrace();
         }
         RichText.fromHtml(repliesList.get(position).getBody_html()).into(holder.tvReplies);
+        holder.ivReplies.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.replies();
+            }
+        });
     }
 
     @Override

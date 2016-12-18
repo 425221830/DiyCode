@@ -23,6 +23,7 @@ public class UserInfoActivity extends BaseActivity{
 
     @Override
     protected void initAllMembers(Bundle savedInstanceState) {
-        toolbar = initToolbar("");
+        String userLogin = getIntent().getStringExtra("userLogin");
+        toolbar = initToolbar(getIntent().getStringExtra("userName"));
     }
 }

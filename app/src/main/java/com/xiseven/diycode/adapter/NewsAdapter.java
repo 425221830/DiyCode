@@ -68,6 +68,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyHolder> impl
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, UserInfoActivity.class);
                 intent.putExtra("userLogin", newsList.get(position).getUser().getLogin());
+                intent.putExtra("userName", newsList.get(position).getUser().getName());
                 mContext.startActivity(intent);
             }
         });
@@ -77,6 +78,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyHolder> impl
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, UserInfoActivity.class);
                 intent.putExtra("userLogin", newsList.get(position).getUser().getLogin());
+                intent.putExtra("userName", newsList.get(position).getUser().getName());
                 mContext.startActivity(intent);
             }
         });
