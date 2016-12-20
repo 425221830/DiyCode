@@ -22,7 +22,6 @@ import com.xiseven.diycode.bean.Topic;
 import com.xiseven.diycode.ui.iView.ITopicInfoView;
 import com.xiseven.diycode.ui.presenter.TopicInfoPresenter;
 import com.xiseven.diycode.utils.DateUtils;
-import com.xiseven.diycode.utils.SPUtils;
 import com.zzhoujay.glideimagegetter.GlideImageGetter;
 import com.zzhoujay.richtext.RichText;
 import com.zzhoujay.richtext.callback.OnUrlClickListener;
@@ -84,7 +83,7 @@ public class TopicInfoActivity extends BaseActivity implements ITopicInfoView, V
             initRec();
             initFab();
         }
-        initToolbar("社区话题");
+//        initToolbar("社区话题");
     }
 
     private void initHeadView() {
@@ -115,7 +114,7 @@ public class TopicInfoActivity extends BaseActivity implements ITopicInfoView, V
         mViewList.add(vpBody);
         mViewList.add(vpReplies);
         mTitleList.add("内容");
-        mTitleList.add("评论");
+        mTitleList.add("评论("+topic.getReplies_count()+")");
         vp.setAdapter(new MyViewPagerAdapter(mTitleList, mViewList));
     }
 
@@ -144,7 +143,7 @@ public class TopicInfoActivity extends BaseActivity implements ITopicInfoView, V
         fabReplies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replies();
+                replies("");
             }
         });
     }
@@ -168,13 +167,16 @@ public class TopicInfoActivity extends BaseActivity implements ITopicInfoView, V
 
     }
 
-    public void replies() {
+    public void replies(String s) {
         if (mPresenter.isLogin()) {
             layoutReplies.setVisibility(View.VISIBLE);
             fabReplies.setVisibility(View.GONE);
+            etReplies.setText(s);
             etReplies.requestFocus();
+            etReplies.setSelection(etReplies.getText().length());
             InputMethodManager imm = (InputMethodManager) etReplies.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+
         } else {
             startActivity(new Intent(mActivity, LoginActivity.class));
         }
@@ -233,7 +235,7 @@ public class TopicInfoActivity extends BaseActivity implements ITopicInfoView, V
         if (etReplies.getText().toString().isEmpty()) {
             etReplies.setError("评论内容不能为空");
         } else {
-            mPresenter.postReplie(topic.getId(), etReplies.getText().toString());
+            mPresenter.postTopicReplies(topic.getId(), etReplies.getText().toString());
             if (layoutReplies.getVisibility() == View.VISIBLE) {
                 layoutReplies.setVisibility(View.GONE);
                 fabReplies.setVisibility(View.VISIBLE);

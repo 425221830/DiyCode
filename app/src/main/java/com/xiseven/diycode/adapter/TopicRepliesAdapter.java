@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
  * Created by XISEVEN on 2016/12/17.
  */
 
-public class TopicRepliesAdapter extends RecyclerView.Adapter<TopicRepliesAdapter.MyHolder>{
+public class TopicRepliesAdapter extends RecyclerView.Adapter<TopicRepliesAdapter.MyHolder> {
 
     private Context mContext;
     private List<TopicReplies> repliesList = new ArrayList<>();
@@ -50,11 +50,11 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<TopicRepliesAdapte
     }
 
     @Override
-    public void onBindViewHolder(MyHolder holder, int position) {
+    public void onBindViewHolder(MyHolder holder, final int position) {
         Picasso.with(mContext)
                 .load(repliesList.get(position).getUser().getAvatar_url())
                 .into(holder.ivHead);
-        holder.tvUsername.setText(repliesList.get(position).getUser().getName());
+        holder.tvUsername.setText(repliesList.get(position).getUser().getLogin());
         holder.tvFloor.setText(position + 1 + "楼");
         try {
             holder.tvTime.setText(DateUtils.getTimeAgo(repliesList.get(position).getUpdated_at()));
@@ -65,7 +65,7 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<TopicRepliesAdapte
         holder.ivReplies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.replies();
+                activity.replies("@"+repliesList.get(position).getUser().getLogin());
             }
         });
     }

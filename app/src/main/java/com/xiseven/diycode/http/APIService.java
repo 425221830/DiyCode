@@ -86,6 +86,11 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("topics/{id}/replies.json")
+    Observable<ResponseBody> postTopicReplies(@Header("Authorization") String Authorization,
+                                              @Path("id") String id,
+                                              @Field("body") String body);
+    @FormUrlEncoded
+    @POST("replies/{id}.json")
     Observable<ResponseBody> postReplies(@Header("Authorization") String Authorization,
                                          @Path("id") String id,
                                          @Field("body") String body);
@@ -94,6 +99,7 @@ public interface APIService {
     Observable<List<Notification>> getNotifications(@Header("Authorization") String Authorization,
                                                     @Query("offset") Integer offset,
                                                     @Query("limit") Integer limit);
+
     @GET("users/{login}/replies.json")
     Observable<List<MyReplies>> getReplies(@Path("login") String login,
                                            @Query("order") String order,

@@ -1,7 +1,6 @@
 package com.xiseven.diycode.ui.presenter;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.xiseven.diycode.http.MyCallBack;
 import com.xiseven.diycode.model.impl.TopicModel;
@@ -65,8 +64,22 @@ public class TopicInfoPresenter extends BasePresenter {
         });
     }
 
-    public void postReplie(Integer id, String body) {
-        topicModel.postReplie(id.toString(), body, new MyCallBack() {
+    public void postTopicReplies(Integer id, String body) {
+        topicModel.postTopicReplies(id.toString(), body, new MyCallBack() {
+            @Override
+            public void success() {
+                mView.postRepliesSuccess();
+            }
+
+            @Override
+            public void failed() {
+                mView.postRepliesFailed();
+            }
+        });
+    }
+
+    public void postReplies(Integer id, String body) {
+        topicModel.postReplies(id.toString(), body, new MyCallBack() {
             @Override
             public void success() {
                 mView.postRepliesSuccess();

@@ -1,7 +1,6 @@
 package com.xiseven.diycode.model.impl;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.JsonObject;
 import com.xiseven.diycode.app.DiyCodeApp;
@@ -185,10 +184,37 @@ public class TopicModel {
                 });
     }
 
-    public void postReplie(String id, String body, final MyCallBack callBack) {
-        Observable<ResponseBody> responseObservable = BuildApi.getAPIService().postReplies(
+    public void postTopicReplies(String id, String body, final MyCallBack callBack) {
+        Observable<ResponseBody> responseObservable = BuildApi.getAPIService().postTopicReplies(
                 C.getRequestHeaderValue((String) SPUtils.getParam(DiyCodeApp.getContext(), "token", "")), id, body);
         responseObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        if (responseBody == null) {
+                            callBack.failed();
+                        } else {
+                            callBack.success();
+                        }
+                    }
+                });
+    }
+
+    public void postReplies(String id, String body, final MyCallBack callBack) {
+        Observable<ResponseBody> postReplies = BuildApi.getAPIService().postReplies(
+                C.getRequestHeaderValue((String) SPUtils.getParam(DiyCodeApp.getContext(), "token", "")), id, body);
+        postReplies.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ResponseBody>() {
                     @Override
