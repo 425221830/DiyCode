@@ -8,7 +8,7 @@ package com.xiseven.diycode.constant;
 public class C {
     public static String client_id = "77aef253";
     public static String client_secret = "8861cbb533d1c19caa6fba43a9351405259068fc52ba3cae744a84df98c3a842";
-    public static String baseUrl = "http://www.diycode.cc/api/v3/";
+    public static String baseUrl = "https://www.diycode.cc/api/v3/";
 
     public static String RequestHeaderKey="Authorization";
     public static String getRequestHeaderValue(String token) {

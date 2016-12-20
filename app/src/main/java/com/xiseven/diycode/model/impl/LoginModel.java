@@ -21,6 +21,10 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by XISEVEN on 2016/11/24.
@@ -52,7 +56,7 @@ public class LoginModel {
                         token = (String) jsonObject.opt("access_token");
                         SPUtils.setParam(DiyCodeApp.getContext(), "token", token);
                         callback.success();
-                        Log.e(TAG, "onResponse: onRespsonse--true");
+                        Log.e(TAG, "onResponse: onRespsonse--true " + token.toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -101,8 +105,12 @@ public class LoginModel {
         myInfo.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                user = response.body();
-                myCallBack.success();
+                if (response.isSuccessful()) {
+                    user = response.body();
+                    myCallBack.success();
+                } else {
+                    myCallBack.failed();
+                }
             }
 
             @Override
@@ -120,12 +128,17 @@ public class LoginModel {
         headImg.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
-                //保存头像到存储器
-                BitmapUtils.saveImgToCache(DiyCodeApp.getContext(), "headImg", bitmap);
-                saveMyInfo();
-                myCallBack.success();
-                Log.e(TAG, "onResponse: " + bitmap.toString());
+                if (response.isSuccessful()) {
+                    Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
+                    //保存头像到存储器
+                    BitmapUtils.saveImgToCache(DiyCodeApp.getContext(), "headImg", bitmap);
+                    saveMyInfo();
+                    myCallBack.success();
+                    Log.e(TAG, "onResponse: " + bitmap.toString());
+                } else {
+                    myCallBack.failed();
+                }
+
             }
 
             @Override
@@ -144,6 +157,7 @@ public class LoginModel {
         String s = new Gson().toJson(user);
         //json字符串存储我的信息到sp
         SPUtils.setParam(DiyCodeApp.getContext(), "myInfo", s);
+        SPUtils.setParam(DiyCodeApp.getContext(), "login", user.getLogin());
 
     }
 }

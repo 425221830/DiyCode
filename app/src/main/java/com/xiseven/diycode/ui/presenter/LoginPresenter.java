@@ -52,12 +52,31 @@ public class LoginPresenter extends BasePresenter {
                                         EventBus.getDefault().post(new MessageEvent(1));
                                         mLoginView.loginSuccess();
                                     }
+
                                     @Override
-                                    public void failed() {}});}
+                                    public void failed() {
+                                        setLogin(false);
+                                        mLoginView.loginFailed();
+                                    }
+                                });
+                            }
+
                             @Override
-                            public void failed() {}});}
+                            public void failed() {
+                                setLogin(false);
+                                mLoginView.loginFailed();
+                            }
+                        });
+                    }
+
                     @Override
-                    public void failed() {}});}
+                    public void failed() {
+                        setLogin(false);
+                        mLoginView.loginFailed();
+                    }
+                });
+            }
+
             @Override
             public void failed() {
                 setLogin(false);

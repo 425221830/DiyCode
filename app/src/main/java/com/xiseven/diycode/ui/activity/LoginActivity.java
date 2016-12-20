@@ -46,7 +46,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @Override
     protected void initAllMembers(Bundle savedInstanceState) {
-        Toolbar toolbar = initToolbar("登录");
+        initToolbar("登录");
         mPresenter = new LoginPresenter(this);
         progressDialog = new ProgressDialog(mActivity);
         progressDialog.setMessage("登录中...");

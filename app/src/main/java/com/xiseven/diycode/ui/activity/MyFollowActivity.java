@@ -15,6 +15,6 @@ public class MyFollowActivity extends BaseActivity{
 
     @Override
     protected void initAllMembers(Bundle savedInstanceState) {
-
+        initToolbar("我的关注");
     }
 }

@@ -15,6 +15,6 @@ public class MyFavoriteActivity extends BaseActivity{
 
     @Override
     protected void initAllMembers(Bundle savedInstanceState) {
-
+        initToolbar("我的收藏");
     }
 }

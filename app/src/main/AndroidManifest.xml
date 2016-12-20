@@ -44,6 +44,7 @@
             android:theme="@style/AppTheme.NoActionBar.Transitions"/>
         <activity android:name=".ui.activity.TopicInfoActivity" />
         <activity android:name=".ui.activity.NodeActivity" />
+        <activity android:name=".ui.activity.NotificationActivity" />
 
     </application>
 

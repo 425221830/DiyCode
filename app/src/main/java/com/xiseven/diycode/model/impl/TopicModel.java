@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
+import com.xiseven.diycode.app.DiyCodeApp;
 import com.xiseven.diycode.bean.Topic;
 import com.xiseven.diycode.bean.TopicReplies;
 import com.xiseven.diycode.constant.C;
@@ -16,6 +17,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -30,6 +32,7 @@ public class TopicModel {
 
     public List<Topic> topicList;
     public String body_html;
+    public Topic mTopic;
     public List<TopicReplies> repliesList;
 
     /**
@@ -74,6 +77,40 @@ public class TopicModel {
                         }
                     }
                 });
+    }
+
+    /**
+     * 根据topic_id获取topic
+     *
+     * @param topic_id
+     * @param callBack
+     */
+    public void getTopic(Integer topic_id, final MyCallBack callBack) {
+        final Observable<Topic> topic = BuildApi.getAPIService().getTopic(topic_id.toString());
+        topic.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Topic>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callBack.failed();
+                    }
+
+                    @Override
+                    public void onNext(Topic topic) {
+                        if (topic != null) {
+                            mTopic = topic;
+                            callBack.success();
+                        } else {
+                            callBack.failed();
+                        }
+                    }
+                });
+
     }
 
     /**
@@ -147,4 +184,32 @@ public class TopicModel {
                     }
                 });
     }
+
+    public void postReplie(String id, String body, final MyCallBack callBack) {
+        Observable<ResponseBody> responseObservable = BuildApi.getAPIService().postReplies(
+                C.getRequestHeaderValue((String) SPUtils.getParam(DiyCodeApp.getContext(), "token", "")), id, body);
+        responseObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        if (responseBody == null) {
+                            callBack.failed();
+                        } else {
+                            callBack.success();
+                        }
+                    }
+                });
+    }
+
 }

@@ -1,7 +1,9 @@
 package com.xiseven.diycode.http;
 
 import com.google.gson.JsonObject;
+import com.xiseven.diycode.bean.MyReplies;
 import com.xiseven.diycode.bean.News;
+import com.xiseven.diycode.bean.Notification;
 import com.xiseven.diycode.bean.Project;
 import com.xiseven.diycode.bean.Sites;
 import com.xiseven.diycode.bean.Topic;
@@ -29,7 +31,7 @@ import rx.Observable;
 
 public interface APIService {
     @FormUrlEncoded
-    @POST("http://www.diycode.cc/oauth/token")
+    @POST("https://www.diycode.cc/oauth/token")
     Call<JsonObject> getToken(@Field("client_id") String client_id,
                               @Field("client_secret") String client_secret,
                               @Field("grant_type") String grant_type,
@@ -72,11 +74,30 @@ public interface APIService {
                                       @Query("limit") Integer limit);
 
     @GET("topics/{id}.json")
+    Observable<Topic> getTopic(@Path("id") String id);
+
+
+    @GET("topics/{id}.json")
     Observable<JsonObject> getTopicBody(@Path("id") String id);
 
     @GET("topics/{id}/replies.json")
     Observable<List<TopicReplies>> getTopicReplies(@Path("id") String id,
                                                    @Query("limit") Integer limit);
 
+    @FormUrlEncoded
+    @POST("topics/{id}/replies.json")
+    Observable<ResponseBody> postReplies(@Header("Authorization") String Authorization,
+                                         @Path("id") String id,
+                                         @Field("body") String body);
+
+    @GET("notifications.json")
+    Observable<List<Notification>> getNotifications(@Header("Authorization") String Authorization,
+                                                    @Query("offset") Integer offset,
+                                                    @Query("limit") Integer limit);
+    @GET("users/{login}/replies.json")
+    Observable<List<MyReplies>> getReplies(@Path("login") String login,
+                                           @Query("order") String order,
+                                           @Query("offset") Integer offset,
+                                           @Query("limit") Integer limit);
 }
 

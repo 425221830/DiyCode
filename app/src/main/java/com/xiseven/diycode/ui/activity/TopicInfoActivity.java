@@ -19,10 +19,10 @@ import com.xiseven.diycode.R;
 import com.xiseven.diycode.adapter.MyViewPagerAdapter;
 import com.xiseven.diycode.adapter.TopicRepliesAdapter;
 import com.xiseven.diycode.bean.Topic;
-import com.xiseven.diycode.bean.TopicReplies;
 import com.xiseven.diycode.ui.iView.ITopicInfoView;
 import com.xiseven.diycode.ui.presenter.TopicInfoPresenter;
 import com.xiseven.diycode.utils.DateUtils;
+import com.xiseven.diycode.utils.SPUtils;
 import com.zzhoujay.glideimagegetter.GlideImageGetter;
 import com.zzhoujay.richtext.RichText;
 import com.zzhoujay.richtext.callback.OnUrlClickListener;
@@ -37,7 +37,7 @@ import butterknife.BindView;
  * Created by XISEVEN on 2016/12/15.
  */
 
-public class TopicInfoActivity extends BaseActivity implements ITopicInfoView {
+public class TopicInfoActivity extends BaseActivity implements ITopicInfoView, View.OnClickListener {
 
     private View vpBody, vpReplies;
     @BindView(R.id.vp)
@@ -63,7 +63,8 @@ public class TopicInfoActivity extends BaseActivity implements ITopicInfoView {
     private TopicInfoPresenter mPresenter;
     private FloatingActionButton fabReplies;
     private TopicRepliesAdapter repliesAdapter;
-    private int i = 1;
+    private int i;
+    private int topic_id;
 
     @Override
     public int getContentViewId() {
@@ -72,12 +73,21 @@ public class TopicInfoActivity extends BaseActivity implements ITopicInfoView {
 
     @Override
     protected void initAllMembers(Bundle savedInstanceState) {
-        topic = getIntent().getParcelableExtra("topic");
         mPresenter = new TopicInfoPresenter(this);
+        topic = getIntent().getParcelableExtra("topic");
+        if (topic == null) {
+            topic_id = getIntent().getIntExtra("topic_id", 0);
+            mPresenter.getTopic(topic_id);
+        } else {
+            initHeadView();
+            initVp();
+            initRec();
+            initFab();
+        }
         initToolbar("社区话题");
-        initVp();
-        initFab();
-        initRec();
+    }
+
+    private void initHeadView() {
         Picasso.with(mActivity)
                 .load(topic.getUser().getAvatar_url())
                 .into(ivHead);
@@ -90,7 +100,6 @@ public class TopicInfoActivity extends BaseActivity implements ITopicInfoView {
             e.printStackTrace();
         }
         mPresenter.getTopicBody(topic.getId());
-
     }
 
     private void initVp() {
@@ -102,7 +111,7 @@ public class TopicInfoActivity extends BaseActivity implements ITopicInfoView {
         layoutReplies = (LinearLayout) vpReplies.findViewById(R.id.layout_replies);
         etReplies = (TextInputEditText) vpReplies.findViewById(R.id.et_replies);
         ivSubmit = (ImageView) vpReplies.findViewById(R.id.iv_submit);
-
+        ivSubmit.setOnClickListener(this);
         mViewList.add(vpBody);
         mViewList.add(vpReplies);
         mTitleList.add("内容");
@@ -120,11 +129,13 @@ public class TopicInfoActivity extends BaseActivity implements ITopicInfoView {
         recReplies.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
-
+                mPresenter.getTopicReplies(topic.getId(), 10);
+                i = 1;
             }
 
             @Override
             public void onLoadMore() {
+                mPresenter.getTopicReplies(topic.getId(), 10 * ++i);
             }
         });
     }
@@ -157,10 +168,48 @@ public class TopicInfoActivity extends BaseActivity implements ITopicInfoView {
 
     }
 
+    public void replies() {
+        if (mPresenter.isLogin()) {
+            layoutReplies.setVisibility(View.VISIBLE);
+            fabReplies.setVisibility(View.GONE);
+            etReplies.requestFocus();
+            InputMethodManager imm = (InputMethodManager) etReplies.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+        } else {
+            startActivity(new Intent(mActivity, LoginActivity.class));
+        }
+    }
+
     @Override
-    public void setTopicRepliesAdapter(List<TopicReplies> repliesList) {
-        repliesAdapter.setRepliesList(repliesList);
+    public void notifyRecView(List list) {
+        repliesAdapter.setRepliesList(list);
         repliesAdapter.notifyDataSetChanged();
+        recReplies.setPullLoadMoreCompleted();
+    }
+
+    @Override
+    public void getFailed() {
+        recReplies.setPullLoadMoreCompleted();
+        showToast("加载失败");
+    }
+
+    @Override
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+        initHeadView();
+        initVp();
+        initRec();
+        initFab();
+    }
+
+    @Override
+    public void postRepliesSuccess() {
+        showToast("评论成功");
+    }
+
+    @Override
+    public void postRepliesFailed() {
+        showToast("评论失败");
     }
 
     @Override
@@ -179,11 +228,17 @@ public class TopicInfoActivity extends BaseActivity implements ITopicInfoView {
         super.onDestroy();
     }
 
-    public void replies() {
-        layoutReplies.setVisibility(View.VISIBLE);
-        fabReplies.setVisibility(View.GONE);
-        etReplies.requestFocus();
-        InputMethodManager imm = (InputMethodManager) etReplies.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+    @Override
+    public void onClick(View view) {
+        if (etReplies.getText().toString().isEmpty()) {
+            etReplies.setError("评论内容不能为空");
+        } else {
+            mPresenter.postReplie(topic.getId(), etReplies.getText().toString());
+            if (layoutReplies.getVisibility() == View.VISIBLE) {
+                layoutReplies.setVisibility(View.GONE);
+                fabReplies.setVisibility(View.VISIBLE);
+            }
+            mPresenter.getTopicReplies(topic.getId(), 10);
+        }
     }
 }

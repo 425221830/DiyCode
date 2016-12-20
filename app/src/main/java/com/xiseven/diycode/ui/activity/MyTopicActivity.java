@@ -15,6 +15,6 @@ public class MyTopicActivity extends BaseActivity{
 
     @Override
     protected void initAllMembers(Bundle savedInstanceState) {
-
+        initToolbar("我的帖子");
     }
 }

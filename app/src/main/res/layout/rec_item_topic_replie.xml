@@ -27,6 +27,13 @@
             android:text="username"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tv_floor"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:gravity="center_vertical"
+            android:layout_alignParentEnd="true"
+            />
 
         <TextView
             android:id="@+id/tv_replies"
@@ -34,8 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_head"
             android:layout_marginTop="8dp"
-            android:text="asdfasdf"
-            android:textSize="20sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_time"

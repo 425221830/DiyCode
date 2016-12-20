@@ -183,6 +183,11 @@ public class MainActivity extends BaseActivity
         switch (item.getItemId()) {
 
             case R.id.action_notification:
+                if (mPresenter.isLogin()) {
+                    startActivity(NotificationActivity.class);
+                } else {
+                    startActivity(LoginActivity.class);
+                }
                 break;
             case R.id.action_settings:
                 Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();

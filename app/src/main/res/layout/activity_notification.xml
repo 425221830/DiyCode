@@ -5,4 +5,8 @@
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
+    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+        android:id="@+id/rec_notification"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

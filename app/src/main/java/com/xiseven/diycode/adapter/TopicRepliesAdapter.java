@@ -55,6 +55,7 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<TopicRepliesAdapte
                 .load(repliesList.get(position).getUser().getAvatar_url())
                 .into(holder.ivHead);
         holder.tvUsername.setText(repliesList.get(position).getUser().getName());
+        holder.tvFloor.setText(position + 1 + "楼");
         try {
             holder.tvTime.setText(DateUtils.getTimeAgo(repliesList.get(position).getUpdated_at()));
         } catch (ParseException e) {
@@ -83,6 +84,8 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<TopicRepliesAdapte
         TextView tvTime;
         @BindView(R.id.tv_replies)
         TextView tvReplies;
+        @BindView(R.id.tv_floor)
+        TextView tvFloor;
         @BindView(R.id.iv_replies)
         ImageView ivReplies;
 
